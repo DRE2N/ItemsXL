@@ -1,0 +1,21 @@
+name: ItemsXL
+main: io.github.dre2n.itemsxl.ItemsXL
+version: ${project.version}
+author: Daniel Saukel
+description: ${project.description}
+website: ${project.url}
+softdepend: [BlueRoseCommons]
+commands:
+  itemsxl:
+    description: ItemsXL core command.
+    aliases: [ixl]
+permissions:
+  ixl.give.*:
+    description: Get all IXL items.
+    default: op
+  ixl.info.*:
+    description: Get information about all IXL items.
+    default: true
+  ixl.reload:
+    description: Reload all config files.
+    default: op
