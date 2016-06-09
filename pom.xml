@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.dre2n</groupId>
     <artifactId>itemsxl</artifactId>
-    <version>0.1.4${buildNo}</version>
+    <version>0.1.5${buildNo}</version>
     <packaging>jar</packaging>
     <name>ItemsXL</name>
     <url>https://dre2n.github.io</url>
@@ -49,7 +49,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>io.github.dre2n.commons</pattern>
-                                    <shadedPattern>io.github.dre2n.itemsxl</shadedPattern>
+                                    <shadedPattern>io.github.dre2n.itemsxl.util.commons</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -62,18 +62,18 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.9.4-R0.1-SNAPSHOT</version>
+            <version>1.10-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.github.dre2n</groupId>
             <artifactId>caliburn</artifactId>
-            <version>0.1.4</version>
+            <version>0.1.5</version>
         </dependency>
         <dependency>
             <groupId>io.github.dre2n</groupId>
             <artifactId>commons</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
     </dependencies>
     <repositories>
