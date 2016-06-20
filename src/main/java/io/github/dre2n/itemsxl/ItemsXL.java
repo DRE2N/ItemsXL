@@ -67,10 +67,11 @@ public class ItemsXL extends BRPlugin {
          * #~~Economy~~##~~~false~~~#
          * #Permissions##~~~false~~~#
          * #~~Metrics~~##~~~~true~~~#
+         * #Resource ID##~~~14472~~~#
          * ##########################
          */
 
-        settings = new BRPluginSettings(false, true, false, false, true, Internals.andHigher(Internals.v1_9_R1));
+        settings = new BRPluginSettings(false, true, false, false, true, 14472, Internals.andHigher(Internals.v1_9_R1));
     }
 
     @Override
