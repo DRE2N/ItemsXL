@@ -96,7 +96,7 @@ public class ItemBox {
     public static ItemBox getByItemStack(ItemStack itemStack) {
         if (itemStack.hasItemMeta()) {
 
-            if (itemStack.getItemMeta().getDisplayName().equals(config.getBoxName())) {
+            if (config.getBoxName().equals(itemStack.getItemMeta().getDisplayName())) {
                 return new ItemBox(items.getById(items.getCustomItemId(itemStack)));
 
             } else {
