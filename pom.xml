@@ -2,11 +2,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.dre2n</groupId>
     <artifactId>itemsxl</artifactId>
-    <version>0.1.7${buildNo}</version>
+    <version>0.1.8${buildNo}</version>
     <packaging>jar</packaging>
     <name>ItemsXL</name>
     <url>https://dre2n.github.io</url>
-    <description>An implementation of the CaliburnAPI.</description>
+    <description>A plugin to create and (de-) serialize custom items and mobs.</description>
+    <properties>
+        <buildNo></buildNo>
+    </properties>
     <build>
         <finalName>itemsxl-${project.version}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
@@ -68,7 +71,7 @@
         <dependency>
             <groupId>io.github.dre2n</groupId>
             <artifactId>caliburn</artifactId>
-            <version>0.1.7</version>
+            <version>0.1.8</version>
         </dependency>
         <dependency>
             <groupId>io.github.dre2n</groupId>
