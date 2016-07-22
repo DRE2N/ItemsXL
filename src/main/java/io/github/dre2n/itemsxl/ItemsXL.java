@@ -24,6 +24,7 @@ import io.github.dre2n.caliburn.mob.CustomMob;
 import io.github.dre2n.caliburn.mob.MobCategories;
 import io.github.dre2n.caliburn.mob.Mobs;
 import io.github.dre2n.caliburn.mob.UniversalMob;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.commons.command.BRCommands;
 import io.github.dre2n.commons.compatibility.Internals;
 import io.github.dre2n.commons.config.MessageConfig;
@@ -37,8 +38,6 @@ import io.github.dre2n.itemsxl.listener.BlockListener;
 import java.io.File;
 import java.io.IOException;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 
 /**
@@ -174,12 +173,12 @@ public class ItemsXL extends BRPlugin {
      */
     public ItemCategories loadItemCategories() {
         File file = new File(getDataFolder(), "ItemCategories.yml");
-        FileConfiguration config;
+        CaliConfiguration config;
 
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                config = YamlConfiguration.loadConfiguration(file);
+                config = CaliConfiguration.loadConfiguration(file);
                 config.save(file);
 
             } catch (IOException exception) {
@@ -187,7 +186,7 @@ public class ItemsXL extends BRPlugin {
             }
         }
 
-        config = YamlConfiguration.loadConfiguration(file);
+        config = CaliConfiguration.loadConfiguration(file);
 
         return new ItemCategories(api, config);
     }
@@ -197,12 +196,12 @@ public class ItemsXL extends BRPlugin {
      */
     public MobCategories loadMobCategories() {
         File file = new File(getDataFolder(), "MobCategories.yml");
-        FileConfiguration config;
+        CaliConfiguration config;
 
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                config = YamlConfiguration.loadConfiguration(file);
+                config = CaliConfiguration.loadConfiguration(file);
                 config.save(file);
 
             } catch (IOException exception) {
@@ -210,7 +209,7 @@ public class ItemsXL extends BRPlugin {
             }
         }
 
-        config = YamlConfiguration.loadConfiguration(file);
+        config = CaliConfiguration.loadConfiguration(file);
 
         return new MobCategories(api, config);
     }
@@ -227,7 +226,7 @@ public class ItemsXL extends BRPlugin {
         }
 
         for (File file : FileUtil.getFilesForFolder(folder)) {
-            items.addItem(file.getName().substring(0, file.getName().length() - 4), YamlConfiguration.loadConfiguration(file));
+            items.addItem(file.getName().substring(0, file.getName().length() - 4), CaliConfiguration.loadConfiguration(file));
         }
 
         File vanilla = new File(getDataFolder() + "/vanilla/items");
@@ -237,7 +236,7 @@ public class ItemsXL extends BRPlugin {
 
         for (Material material : Material.values()) {
             File file = new File(vanilla, material.getId() + ".yml");
-            FileConfiguration config;
+            CaliConfiguration config;
             if (!file.exists()) {
                 try {
                     file.createNewFile();
@@ -245,7 +244,7 @@ public class ItemsXL extends BRPlugin {
                     exception.printStackTrace();
                 }
 
-                config = YamlConfiguration.loadConfiguration(file);
+                config = CaliConfiguration.loadConfiguration(file);
                 config.set("material", material.toString());
                 config.createSection("categoryDamageModifiers");
                 config.createSection("mobDamageModifiers");
@@ -256,7 +255,7 @@ public class ItemsXL extends BRPlugin {
                 }
 
             } else {
-                config = YamlConfiguration.loadConfiguration(file);
+                config = CaliConfiguration.loadConfiguration(file);
             }
 
             items.addItem(new UniversalItem(api, String.valueOf(material.getId()), config));
@@ -277,7 +276,7 @@ public class ItemsXL extends BRPlugin {
         }
 
         for (File file : FileUtil.getFilesForFolder(folder)) {
-            mobs.addMob(new CustomMob(api, file.getName().substring(0, file.getName().length() - 4), YamlConfiguration.loadConfiguration(file)));
+            mobs.addMob(new CustomMob(api, file.getName().substring(0, file.getName().length() - 4), CaliConfiguration.loadConfiguration(file)));
         }
 
         File vanilla = new File(getDataFolder() + "/vanilla/mobs");
@@ -285,7 +284,7 @@ public class ItemsXL extends BRPlugin {
 
         for (EntityType entity : EntityType.values()) {
             File file = new File(vanilla, entity.getTypeId() + ".yml");
-            FileConfiguration config;
+            CaliConfiguration config;
             if (!file.exists()) {
                 try {
                     file.createNewFile();
@@ -293,7 +292,7 @@ public class ItemsXL extends BRPlugin {
                     exception.printStackTrace();
                 }
 
-                config = YamlConfiguration.loadConfiguration(file);
+                config = CaliConfiguration.loadConfiguration(file);
                 config.set("species", entity.toString());
                 config.createSection("categoryDamageModifiers");
                 config.createSection("itemDamageModifiers");
@@ -304,7 +303,7 @@ public class ItemsXL extends BRPlugin {
                 }
 
             } else {
-                config = YamlConfiguration.loadConfiguration(file);
+                config = CaliConfiguration.loadConfiguration(file);
             }
 
             mobs.addMob(new UniversalMob(api, String.valueOf(entity.getTypeId()), config));
