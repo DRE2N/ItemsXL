@@ -44,6 +44,7 @@ public enum IMessages implements Messages {
     COMMAND_HELP_MAIN("help.main", "&7General status information."),
     COMMAND_HELP_OPEN("help.open", "&7Open the item box in your hand."),
     COMMAND_HELP_RELOAD("help.reload", "&7Reload all configs and data. Usage: &o/ixl reload"),
+    COMMAND_HELP_SERIALIZE("help.serialize", "&7Serialize the item stack in your hand. Usage: &o/ixl serialize ([bukkit|caliburn])"),
     OBJECT_PLAYER("object.player", "player"),
     OBJECT_ITEM("object.item", "item");
 
