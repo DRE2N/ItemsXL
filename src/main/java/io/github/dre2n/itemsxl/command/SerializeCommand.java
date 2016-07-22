@@ -19,6 +19,7 @@ package io.github.dre2n.itemsxl.command;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.UniversalItemStack;
 import io.github.dre2n.commons.command.BRCommand;
+import io.github.dre2n.commons.util.messageutil.MessageUtil;
 import io.github.dre2n.itemsxl.ItemsXL;
 import io.github.dre2n.itemsxl.config.IMessages;
 import java.io.File;
@@ -35,7 +36,7 @@ import org.bukkit.entity.Player;
 public class SerializeCommand extends BRCommand {
 
     public SerializeCommand() {
-        setCommand("help");
+        setCommand("serialize");
         setMinArgs(0);
         setMaxArgs(1);
         setHelp(IMessages.COMMAND_HELP_SERIALIZE.getMessage());
@@ -75,6 +76,8 @@ public class SerializeCommand extends BRCommand {
         } catch (IOException exception) {
             exception.printStackTrace();
         }
+
+        MessageUtil.sendMessage(sender, IMessages.COMMAND_SERIALIZE_SUCCESS.getMessage());
     }
 
 }

@@ -37,6 +37,7 @@ public enum IMessages implements Messages {
     COMMAND_MAIN_HELP("command.main.help", "&7Type in &o/ixl help&r&7 for further information."),
     COMMAND_OPEN_SUCCESS("command.open.success", "&7You opened the box. You found the item &o&v1&7!"),
     COMMAND_RELOAD_SUCCESS("command.reload.success", "&7Successfully reloaded ItemsXL."),
+    COMMAND_SERIALIZE_SUCCESS("command.serialize.success", "&7Successfully serialized item. Have a look at the &oItemsXL/serialized.yml&r&7 file."),
     COMMAND_HELP_GIVE("help.give", "&7Give an item to a player. Usage: &o/ixl give [player=you] [id] ([amount=1]) (box)"),
     COMMAND_HELP_HELP("help.help", "&7Show command help. Usage: &o/ixl help [page]"),
     COMMAND_HELP_INFO("help.info", "&7Show information about an item. Usage: &o/ixl info [item]"),

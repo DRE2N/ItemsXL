@@ -154,7 +154,8 @@ public class ItemsXL extends BRPlugin {
                 new ListCommand(),
                 new MainCommand(),
                 new OpenCommand(),
-                new ReloadCommand()
+                new ReloadCommand(),
+                new SerializeCommand()
         );
 
         iCommands.register(this);
