@@ -46,6 +46,8 @@ import org.bukkit.entity.EntityType;
  */
 public class ItemsXL extends BRPlugin {
 
+    CaliburnAPI api;
+
     private static ItemsXL instance;
 
     public static File ITEMS;
@@ -54,7 +56,6 @@ public class ItemsXL extends BRPlugin {
     private IConfig iConfig;
     private MessageConfig messageConfig;
     private BRCommands iCommands;
-    private CaliburnAPI api;
 
     public ItemsXL() {
         /*
@@ -157,14 +158,6 @@ public class ItemsXL extends BRPlugin {
         );
 
         iCommands.register(this);
-    }
-
-    /**
-     * @return
-     * the loaded instance of CaliburnAPI
-     */
-    public CaliburnAPI getAPI() {
-        return api;
     }
 
     /**

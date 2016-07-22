@@ -2,9 +2,8 @@ name: ItemsXL
 main: io.github.dre2n.itemsxl.ItemsXL
 version: ${project.version}
 author: Daniel Saukel
-description: ${project.description}
+description: ${project.description}${buildNo}
 website: ${project.url}
-softdepend: [BlueRoseCommons]
 commands:
   itemsxl:
     description: ItemsXL core command.

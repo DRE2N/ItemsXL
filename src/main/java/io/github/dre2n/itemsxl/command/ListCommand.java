@@ -17,7 +17,6 @@
 package io.github.dre2n.itemsxl.command;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
-import io.github.dre2n.caliburn.item.CustomItem;
 import io.github.dre2n.caliburn.item.UniversalItem;
 import io.github.dre2n.commons.command.BRCommand;
 import io.github.dre2n.commons.util.NumberUtil;
@@ -33,7 +32,7 @@ import org.bukkit.command.CommandSender;
  */
 public class ListCommand extends BRCommand {
 
-    CaliburnAPI api = ItemsXL.getInstance().getAPI();
+    CaliburnAPI api = CaliburnAPI.getInstance();
 
     public ListCommand() {
         setCommand("list");

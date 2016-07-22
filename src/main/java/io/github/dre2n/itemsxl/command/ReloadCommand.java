@@ -16,6 +16,7 @@
  */
 package io.github.dre2n.itemsxl.command;
 
+import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.CustomItem;
 import io.github.dre2n.caliburn.item.UniversalItem;
 import io.github.dre2n.commons.command.BRCommand;
@@ -45,7 +46,7 @@ public class ReloadCommand extends BRCommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        List<UniversalItem> iItemList = plugin.getAPI().getItems().getItems(CustomItem.class);
+        List<UniversalItem> iItemList = CaliburnAPI.getInstance().getItems().getItems(CustomItem.class);
 
         plugin.loadIConfig();
         plugin.loadMessageConfig();

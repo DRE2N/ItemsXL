@@ -46,7 +46,7 @@ public class OpenCommand extends BRCommand {
     public void onExecute(String[] args, CommandSender sender) {
         Player player = (Player) sender;
 
-        ItemStack itemStack = player.getItemInHand();
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
 
         if (itemStack.getType() != Material.SKULL_ITEM) {
             MessageUtil.sendMessage(sender, IMessages.ERROR_NO_ITEM_BOX.getMessage());

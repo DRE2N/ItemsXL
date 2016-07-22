@@ -28,7 +28,7 @@ public class IConfig extends BRConfig {
 
     public static final int CONFIG_VERSION = 1;
 
-    private String language = "en";
+    private String language = "english";
 
     private boolean builtInItems = true;
 

@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.dre2n</groupId>
     <artifactId>itemsxl</artifactId>
-    <version>0.1.8${buildNo}</version>
+    <version>0.2</version>
     <packaging>jar</packaging>
     <name>ItemsXL</name>
     <url>https://dre2n.github.io</url>
@@ -11,7 +11,7 @@
         <buildNo></buildNo>
     </properties>
     <build>
-        <finalName>itemsxl-${project.version}</finalName>
+        <finalName>itemsxl-${project.version}${buildNo}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
@@ -71,7 +71,7 @@
         <dependency>
             <groupId>io.github.dre2n</groupId>
             <artifactId>caliburn</artifactId>
-            <version>0.1.8</version>
+            <version>0.2</version>
         </dependency>
         <dependency>
             <groupId>io.github.dre2n</groupId>

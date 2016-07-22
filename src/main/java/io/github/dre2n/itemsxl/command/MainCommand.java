@@ -16,6 +16,7 @@
  */
 package io.github.dre2n.itemsxl.command;
 
+import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.CustomItem;
 import io.github.dre2n.caliburn.item.UniversalItem;
 import io.github.dre2n.commons.command.BRCommand;
@@ -43,7 +44,7 @@ public class MainCommand extends BRCommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        List<UniversalItem> itemList = plugin.getAPI().getItems().getItems(CustomItem.class);
+        List<UniversalItem> itemList = CaliburnAPI.getInstance().getItems().getItems(CustomItem.class);
 
         MessageUtil.sendCenteredMessage(sender, "&4" + I[0] + T[0] + E[0] + M[0] + S[0] + "&f" + X[0] + L[0]);
         MessageUtil.sendCenteredMessage(sender, "&4" + I[1] + T[1] + E[1] + M[1] + S[1] + "&f" + X[1] + L[1]);

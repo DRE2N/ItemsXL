@@ -16,6 +16,7 @@
  */
 package io.github.dre2n.itemsxl.item;
 
+import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.Items;
 import io.github.dre2n.caliburn.item.UniversalItem;
 import io.github.dre2n.commons.util.messageutil.MessageUtil;
@@ -35,7 +36,7 @@ public class ItemBox {
 
     static ItemsXL plugin = ItemsXL.getInstance();
     static IConfig config = plugin.getIConfig();
-    static Items items = plugin.getAPI().getItems();
+    static Items items = CaliburnAPI.getInstance().getItems();
 
     private UniversalItem item;
 

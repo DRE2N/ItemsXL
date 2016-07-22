@@ -21,7 +21,6 @@ import io.github.dre2n.caliburn.item.UniversalItem;
 import io.github.dre2n.commons.command.BRCommand;
 import io.github.dre2n.commons.util.NumberUtil;
 import io.github.dre2n.commons.util.messageutil.MessageUtil;
-import io.github.dre2n.itemsxl.ItemsXL;
 import io.github.dre2n.itemsxl.config.IMessages;
 import io.github.dre2n.itemsxl.item.ItemBox;
 import org.bukkit.Bukkit;
@@ -33,7 +32,7 @@ import org.bukkit.entity.Player;
  */
 public class GiveCommand extends BRCommand {
 
-    CaliburnAPI api = ItemsXL.getInstance().getAPI();
+    CaliburnAPI api = CaliburnAPI.getInstance();
 
     public GiveCommand() {
         setCommand("give");
@@ -48,8 +47,8 @@ public class GiveCommand extends BRCommand {
     @Override
     public void onExecute(String[] args, CommandSender sender) {
         Player player;
-        if (Bukkit.getServer().getPlayer(args[1]) != null) {
-            player = Bukkit.getServer().getPlayer(args[1]);
+        if (Bukkit.getPlayer(args[1]) != null) {
+            player = Bukkit.getPlayer(args[1]);
 
         } else if (sender instanceof Player) {
             player = (Player) sender;
