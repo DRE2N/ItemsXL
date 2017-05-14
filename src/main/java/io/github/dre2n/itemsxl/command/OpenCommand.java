@@ -19,7 +19,7 @@ package io.github.dre2n.itemsxl.command;
 import io.github.dre2n.commons.command.BRCommand;
 import io.github.dre2n.commons.util.messageutil.MessageUtil;
 import io.github.dre2n.itemsxl.ItemsXL;
-import io.github.dre2n.itemsxl.config.IMessages;
+import io.github.dre2n.itemsxl.config.IMessage;
 import io.github.dre2n.itemsxl.item.ItemBox;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -37,7 +37,7 @@ public class OpenCommand extends BRCommand {
         setCommand("open");
         setMinArgs(0);
         setMaxArgs(0);
-        setHelp(IMessages.COMMAND_HELP_OPEN.getMessage());
+        setHelp(IMessage.COMMAND_HELP_OPEN.getMessage());
         setPlayerCommand(true);
         setConsoleCommand(false);
     }
@@ -49,7 +49,7 @@ public class OpenCommand extends BRCommand {
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
         if (itemStack.getType() != Material.SKULL_ITEM) {
-            MessageUtil.sendMessage(sender, IMessages.ERROR_NO_ITEM_BOX.getMessage());
+            MessageUtil.sendMessage(sender, IMessage.ERROR_NO_ITEM_BOX.getMessage());
             return;
         }
 
@@ -59,7 +59,7 @@ public class OpenCommand extends BRCommand {
             box.open(player);
 
         } else {
-            MessageUtil.sendMessage(sender, IMessages.ERROR_NO_ITEM_BOX.getMessage());
+            MessageUtil.sendMessage(sender, IMessage.ERROR_NO_ITEM_BOX.getMessage());
         }
     }
 

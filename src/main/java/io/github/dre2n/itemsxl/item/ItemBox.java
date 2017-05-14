@@ -22,7 +22,7 @@ import io.github.dre2n.caliburn.item.UniversalItem;
 import io.github.dre2n.commons.util.messageutil.MessageUtil;
 import io.github.dre2n.itemsxl.ItemsXL;
 import io.github.dre2n.itemsxl.config.IConfig;
-import io.github.dre2n.itemsxl.config.IMessages;
+import io.github.dre2n.itemsxl.config.IMessage;
 import java.util.Arrays;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -85,7 +85,7 @@ public class ItemBox {
             player.getInventory().addItem(item.toItemStack(itemStack.getAmount()));
 
             MessageUtil.sendPluginTag(player, plugin);
-            MessageUtil.sendCenteredMessage(player, IMessages.COMMAND_OPEN_SUCCESS.getMessage(item.getName()));
+            MessageUtil.sendCenteredMessage(player, IMessage.COMMAND_OPEN_SUCCESS.getMessage(item.getName()));
             return true;
 
         } else {

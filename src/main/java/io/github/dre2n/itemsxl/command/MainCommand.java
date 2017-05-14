@@ -24,7 +24,7 @@ import io.github.dre2n.commons.compatibility.CompatibilityHandler;
 import static io.github.dre2n.commons.util.messageutil.FatLetters.*;
 import io.github.dre2n.commons.util.messageutil.MessageUtil;
 import io.github.dre2n.itemsxl.ItemsXL;
-import io.github.dre2n.itemsxl.config.IMessages;
+import io.github.dre2n.itemsxl.config.IMessage;
 import java.util.List;
 import org.bukkit.command.CommandSender;
 
@@ -37,7 +37,7 @@ public class MainCommand extends BRCommand {
 
     public MainCommand() {
         setCommand("main");
-        setHelp(IMessages.COMMAND_HELP_MAIN.getMessage());
+        setHelp(IMessage.COMMAND_HELP_MAIN.getMessage());
         setPlayerCommand(true);
         setConsoleCommand(true);
     }
@@ -51,10 +51,10 @@ public class MainCommand extends BRCommand {
         MessageUtil.sendCenteredMessage(sender, "&4" + I[2] + T[2] + E[2] + M[2] + S[2] + "&f" + X[2] + L[2]);
         MessageUtil.sendCenteredMessage(sender, "&4" + I[3] + T[3] + E[3] + M[3] + S[3] + "&f" + X[3] + L[3]);
         MessageUtil.sendCenteredMessage(sender, "&4" + I[4] + T[4] + E[4] + M[4] + S[4] + "&f" + X[4] + L[4]);
-        MessageUtil.sendCenteredMessage(sender, "&b&l######## " + IMessages.COMMAND_MAIN_WELCOME.getMessage() + " &7v" + plugin.getDescription().getVersion() + " &b&l########");
-        MessageUtil.sendCenteredMessage(sender, IMessages.COMMAND_MAIN_LOADED.getMessage(String.valueOf(itemList.size())));
-        MessageUtil.sendCenteredMessage(sender, IMessages.COMMAND_MAIN_COMPATIBILITY.getMessage(CompatibilityHandler.getInstance().getInternals().toString()));
-        MessageUtil.sendCenteredMessage(sender, IMessages.COMMAND_MAIN_HELP.getMessage());
+        MessageUtil.sendCenteredMessage(sender, "&b&l######## " + IMessage.COMMAND_MAIN_WELCOME.getMessage() + " &7v" + plugin.getDescription().getVersion() + " &b&l########");
+        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_LOADED.getMessage(String.valueOf(itemList.size())));
+        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_COMPATIBILITY.getMessage(CompatibilityHandler.getInstance().getInternals().toString()));
+        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_HELP.getMessage());
         MessageUtil.sendCenteredMessage(sender, "&7\u00a92015-2017 Daniel Saukel; licensed under GPLv3.");
     }
 

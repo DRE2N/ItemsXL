@@ -21,7 +21,7 @@ import io.github.dre2n.caliburn.item.UniversalItem;
 import io.github.dre2n.commons.command.BRCommand;
 import io.github.dre2n.commons.util.NumberUtil;
 import io.github.dre2n.commons.util.messageutil.MessageUtil;
-import io.github.dre2n.itemsxl.config.IMessages;
+import io.github.dre2n.itemsxl.config.IMessage;
 import io.github.dre2n.itemsxl.item.ItemBox;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -38,7 +38,7 @@ public class GiveCommand extends BRCommand {
         setCommand("give");
         setMinArgs(2);
         setMaxArgs(4);
-        setHelp(IMessages.COMMAND_HELP_GIVE.getMessage());
+        setHelp(IMessage.COMMAND_HELP_GIVE.getMessage());
         setPermission("ixl.give");
         setPlayerCommand(true);
         setConsoleCommand(true);
@@ -54,7 +54,7 @@ public class GiveCommand extends BRCommand {
             player = (Player) sender;
 
         } else {
-            MessageUtil.sendMessage(sender, IMessages.ERROR_NO_OBJECT.getMessage(IMessages.OBJECT_PLAYER.getMessage()));
+            MessageUtil.sendMessage(sender, IMessage.ERROR_NO_OBJECT.getMessage(IMessage.OBJECT_PLAYER.getMessage()));
             return;
         }
 
@@ -74,7 +74,7 @@ public class GiveCommand extends BRCommand {
             player.getInventory().addItem(item.toItemStack(amount));
 
         } else {
-            MessageUtil.sendMessage(player, IMessages.ERROR_NO_OBJECT.getMessage(IMessages.OBJECT_ITEM.getMessage()));
+            MessageUtil.sendMessage(player, IMessage.ERROR_NO_OBJECT.getMessage(IMessage.OBJECT_ITEM.getMessage()));
         }
 
     }

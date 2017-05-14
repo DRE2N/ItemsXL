@@ -23,7 +23,7 @@ import io.github.dre2n.commons.command.BRCommand;
 import io.github.dre2n.commons.compatibility.CompatibilityHandler;
 import io.github.dre2n.commons.util.messageutil.MessageUtil;
 import io.github.dre2n.itemsxl.ItemsXL;
-import io.github.dre2n.itemsxl.config.IMessages;
+import io.github.dre2n.itemsxl.config.IMessage;
 import java.util.List;
 import org.bukkit.command.CommandSender;
 
@@ -38,7 +38,7 @@ public class ReloadCommand extends BRCommand {
         setCommand("reload");
         setMinArgs(0);
         setMaxArgs(0);
-        setHelp(IMessages.COMMAND_HELP_RELOAD.getMessage());
+        setHelp(IMessage.COMMAND_HELP_RELOAD.getMessage());
         setPermission("ixl.reload");
         setPlayerCommand(true);
         setConsoleCommand(true);
@@ -54,9 +54,9 @@ public class ReloadCommand extends BRCommand {
         plugin.loadAPI();
 
         MessageUtil.sendPluginTag(sender, plugin);
-        MessageUtil.sendCenteredMessage(sender, IMessages.COMMAND_RELOAD_SUCCESS.getMessage());
-        MessageUtil.sendCenteredMessage(sender, IMessages.COMMAND_MAIN_LOADED.getMessage(String.valueOf(iItemList.size())));
-        MessageUtil.sendCenteredMessage(sender, IMessages.COMMAND_MAIN_COMPATIBILITY.getMessage(String.valueOf(CompatibilityHandler.getInstance().getInternals())));
+        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_RELOAD_SUCCESS.getMessage());
+        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_LOADED.getMessage(String.valueOf(iItemList.size())));
+        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_COMPATIBILITY.getMessage(String.valueOf(CompatibilityHandler.getInstance().getInternals())));
     }
 
 }

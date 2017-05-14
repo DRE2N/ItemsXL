@@ -22,7 +22,7 @@ import io.github.dre2n.commons.command.BRCommand;
 import io.github.dre2n.commons.util.NumberUtil;
 import io.github.dre2n.commons.util.messageutil.MessageUtil;
 import io.github.dre2n.itemsxl.ItemsXL;
-import io.github.dre2n.itemsxl.config.IMessages;
+import io.github.dre2n.itemsxl.config.IMessage;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.command.CommandSender;
@@ -38,7 +38,7 @@ public class ListCommand extends BRCommand {
         setCommand("list");
         setMinArgs(0);
         setMaxArgs(1);
-        setHelp(IMessages.COMMAND_HELP_LIST.getMessage());
+        setHelp(IMessage.COMMAND_HELP_LIST.getMessage());
         setPermission("ixl.list");
         setPlayerCommand(true);
         setConsoleCommand(true);

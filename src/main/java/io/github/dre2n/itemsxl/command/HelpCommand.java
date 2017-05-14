@@ -20,7 +20,7 @@ import io.github.dre2n.commons.command.BRCommand;
 import io.github.dre2n.commons.util.NumberUtil;
 import io.github.dre2n.commons.util.messageutil.MessageUtil;
 import io.github.dre2n.itemsxl.ItemsXL;
-import io.github.dre2n.itemsxl.config.IMessages;
+import io.github.dre2n.itemsxl.config.IMessage;
 import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.command.CommandSender;
@@ -36,14 +36,14 @@ public class HelpCommand extends BRCommand {
         setCommand("help");
         setMinArgs(0);
         setMaxArgs(1);
-        setHelp(IMessages.COMMAND_HELP_HELP.getMessage());
+        setHelp(IMessage.COMMAND_HELP_HELP.getMessage());
         setPlayerCommand(true);
         setConsoleCommand(true);
     }
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        Set<BRCommand> commandList = ItemsXL.getInstance().getCommands().getCommands();
+        Set<BRCommand> commandList = ItemsXL.getInstance().getCommandCache().getCommands();
         Set<BRCommand> toSend = new HashSet<>();
 
         int page = 1;

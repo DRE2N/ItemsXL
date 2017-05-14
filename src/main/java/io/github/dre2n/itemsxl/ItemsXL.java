@@ -25,7 +25,7 @@ import io.github.dre2n.caliburn.mob.MobCategories;
 import io.github.dre2n.caliburn.mob.Mobs;
 import io.github.dre2n.caliburn.mob.UniversalMob;
 import io.github.dre2n.caliburn.util.CaliConfiguration;
-import io.github.dre2n.commons.command.BRCommands;
+import io.github.dre2n.commons.command.BRCommandCache;
 import io.github.dre2n.commons.compatibility.Internals;
 import io.github.dre2n.commons.config.MessageConfig;
 import io.github.dre2n.commons.javaplugin.BRPlugin;
@@ -33,7 +33,7 @@ import io.github.dre2n.commons.javaplugin.BRPluginSettings;
 import io.github.dre2n.commons.util.FileUtil;
 import io.github.dre2n.itemsxl.command.*;
 import io.github.dre2n.itemsxl.config.IConfig;
-import io.github.dre2n.itemsxl.config.IMessages;
+import io.github.dre2n.itemsxl.config.IMessage;
 import io.github.dre2n.itemsxl.listener.BlockListener;
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class ItemsXL extends BRPlugin {
 
     private IConfig iConfig;
     private MessageConfig messageConfig;
-    private BRCommands iCommands;
+    private BRCommandCache iCommands;
 
     public ItemsXL() {
         /*
@@ -129,14 +129,14 @@ public class ItemsXL extends BRPlugin {
         if (!folder.exists()) {
             folder.mkdirs();
         }
-        messageConfig = new MessageConfig(IMessages.class, new File(folder, iConfig.getLanguage() + ".yml"));
+        messageConfig = new MessageConfig(IMessage.class, new File(folder, iConfig.getLanguage() + ".yml"));
     }
 
     /**
      * @return the iCommands
      */
     @Override
-    public BRCommands getCommands() {
+    public BRCommandCache getCommandCache() {
         return iCommands;
     }
 
@@ -145,7 +145,7 @@ public class ItemsXL extends BRPlugin {
      * the iCommands to set
      */
     public void loadICommands() {
-        iCommands = new BRCommands(
+        iCommands = new BRCommandCache(
                 "itemsxl",
                 this,
                 new HelpCommand(),

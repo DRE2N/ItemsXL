@@ -16,7 +16,7 @@
  */
 package io.github.dre2n.itemsxl.config;
 
-import io.github.dre2n.commons.config.Messages;
+import io.github.dre2n.commons.config.Message;
 import io.github.dre2n.itemsxl.ItemsXL;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -24,7 +24,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 /**
  * @author Daniel Saukel
  */
-public enum IMessages implements Messages {
+public enum IMessage implements Message {
 
     ERROR_NO_OBJECT("error.noObject", "&cThis &v1 does not exist."),
     ERROR_NO_PERMISSION("error.noPermission", "&cYou do not have permission to use the command &o&v1&r&c."),
@@ -52,7 +52,7 @@ public enum IMessages implements Messages {
     private String identifier;
     private String message;
 
-    IMessages(String identifier, String message) {
+    IMessage(String identifier, String message) {
         this.identifier = identifier;
         this.message = message;
     }
@@ -82,8 +82,8 @@ public enum IMessages implements Messages {
      * @param identifer
      * the identifer to set
      */
-    public static Messages getByIdentifier(String identifier) {
-        for (Messages message : values()) {
+    public static Message getByIdentifier(String identifier) {
+        for (Message message : values()) {
             if (message.getIdentifier().equals(identifier)) {
                 return message;
             }
@@ -97,7 +97,7 @@ public enum IMessages implements Messages {
      */
     public static FileConfiguration toConfig() {
         FileConfiguration config = new YamlConfiguration();
-        for (IMessages message : values()) {
+        for (IMessage message : values()) {
             config.set(message.getIdentifier(), message.message);
         }
 
