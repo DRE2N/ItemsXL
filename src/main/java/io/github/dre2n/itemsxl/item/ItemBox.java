@@ -19,7 +19,7 @@ package io.github.dre2n.itemsxl.item;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.Items;
 import io.github.dre2n.caliburn.item.UniversalItem;
-import io.github.dre2n.commons.util.messageutil.MessageUtil;
+import io.github.dre2n.commons.chat.MessageUtil;
 import io.github.dre2n.itemsxl.ItemsXL;
 import io.github.dre2n.itemsxl.config.IConfig;
 import io.github.dre2n.itemsxl.config.IMessage;

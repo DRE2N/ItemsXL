@@ -18,9 +18,9 @@ package io.github.dre2n.itemsxl.command;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.UniversalItem;
-import io.github.dre2n.commons.command.BRCommand;
-import io.github.dre2n.commons.util.NumberUtil;
-import io.github.dre2n.commons.util.messageutil.MessageUtil;
+import io.github.dre2n.commons.chat.MessageUtil;
+import io.github.dre2n.commons.command.DRECommand;
+import io.github.dre2n.commons.misc.NumberUtil;
 import io.github.dre2n.itemsxl.config.IMessage;
 import io.github.dre2n.itemsxl.item.ItemBox;
 import org.bukkit.Bukkit;
@@ -30,7 +30,7 @@ import org.bukkit.entity.Player;
 /**
  * @author Daniel Saukel
  */
-public class GiveCommand extends BRCommand {
+public class GiveCommand extends DRECommand {
 
     CaliburnAPI api = CaliburnAPI.getInstance();
 

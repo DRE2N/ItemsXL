@@ -17,14 +17,14 @@
 package io.github.dre2n.itemsxl.config;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
-import io.github.dre2n.commons.config.BRConfig;
+import io.github.dre2n.commons.config.DREConfig;
 import java.io.File;
 import org.bukkit.ChatColor;
 
 /**
  * @author Daniel Saukel
  */
-public class IConfig extends BRConfig {
+public class IConfig extends DREConfig {
 
     public static final int CONFIG_VERSION = 1;
 

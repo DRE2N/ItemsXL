@@ -18,8 +18,8 @@ package io.github.dre2n.itemsxl.command;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.UniversalItemStack;
-import io.github.dre2n.commons.command.BRCommand;
-import io.github.dre2n.commons.util.messageutil.MessageUtil;
+import io.github.dre2n.commons.chat.MessageUtil;
+import io.github.dre2n.commons.command.DRECommand;
 import io.github.dre2n.itemsxl.ItemsXL;
 import io.github.dre2n.itemsxl.config.IMessage;
 import java.io.File;
@@ -33,7 +33,7 @@ import org.bukkit.entity.Player;
 /**
  * @author Daniel Saukel
  */
-public class SerializeCommand extends BRCommand {
+public class SerializeCommand extends DRECommand {
 
     public SerializeCommand() {
         setCommand("serialize");

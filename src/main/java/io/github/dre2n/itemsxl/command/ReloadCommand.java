@@ -19,9 +19,9 @@ package io.github.dre2n.itemsxl.command;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.CustomItem;
 import io.github.dre2n.caliburn.item.UniversalItem;
-import io.github.dre2n.commons.command.BRCommand;
+import io.github.dre2n.commons.chat.MessageUtil;
+import io.github.dre2n.commons.command.DRECommand;
 import io.github.dre2n.commons.compatibility.CompatibilityHandler;
-import io.github.dre2n.commons.util.messageutil.MessageUtil;
 import io.github.dre2n.itemsxl.ItemsXL;
 import io.github.dre2n.itemsxl.config.IMessage;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author Daniel Saukel
  */
-public class ReloadCommand extends BRCommand {
+public class ReloadCommand extends DRECommand {
 
     ItemsXL plugin = ItemsXL.getInstance();
 

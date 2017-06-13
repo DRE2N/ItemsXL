@@ -16,9 +16,9 @@
  */
 package io.github.dre2n.itemsxl.command;
 
-import io.github.dre2n.commons.command.BRCommand;
-import io.github.dre2n.commons.util.NumberUtil;
-import io.github.dre2n.commons.util.messageutil.MessageUtil;
+import io.github.dre2n.commons.chat.MessageUtil;
+import io.github.dre2n.commons.command.DRECommand;
+import io.github.dre2n.commons.misc.NumberUtil;
 import io.github.dre2n.itemsxl.ItemsXL;
 import io.github.dre2n.itemsxl.config.IMessage;
 import java.util.HashSet;
@@ -28,7 +28,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author Daniel Saukel
  */
-public class HelpCommand extends BRCommand {
+public class HelpCommand extends DRECommand {
 
     ItemsXL plugin = ItemsXL.getInstance();
 
@@ -43,8 +43,8 @@ public class HelpCommand extends BRCommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        Set<BRCommand> commandList = ItemsXL.getInstance().getCommandCache().getCommands();
-        Set<BRCommand> toSend = new HashSet<>();
+        Set<DRECommand> commandList = ItemsXL.getInstance().getCommandCache().getCommands();
+        Set<DRECommand> toSend = new HashSet<>();
 
         int page = 1;
         if (args.length == 2) {
@@ -53,7 +53,7 @@ public class HelpCommand extends BRCommand {
         int send = 0;
         int max = 0;
         int min = 0;
-        for (BRCommand command : commandList) {
+        for (DRECommand command : commandList) {
             send++;
             if (send >= page * 5 - 4 && send <= page * 5) {
                 min = page * 5 - 4;
@@ -65,7 +65,7 @@ public class HelpCommand extends BRCommand {
         MessageUtil.sendPluginTag(sender, plugin);
         MessageUtil.sendCenteredMessage(sender, "&4&l[ &6" + min + "-" + max + " &4/&6 " + send + " &4|&6 " + page + " &4&l]");
 
-        for (BRCommand command : toSend) {
+        for (DRECommand command : toSend) {
             MessageUtil.sendMessage(sender, "&b" + command.getCommand() + "&7 - " + command.getHelp());
         }
     }

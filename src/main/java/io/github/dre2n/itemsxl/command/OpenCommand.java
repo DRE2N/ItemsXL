@@ -16,8 +16,8 @@
  */
 package io.github.dre2n.itemsxl.command;
 
-import io.github.dre2n.commons.command.BRCommand;
-import io.github.dre2n.commons.util.messageutil.MessageUtil;
+import io.github.dre2n.commons.chat.MessageUtil;
+import io.github.dre2n.commons.command.DRECommand;
 import io.github.dre2n.itemsxl.ItemsXL;
 import io.github.dre2n.itemsxl.config.IMessage;
 import io.github.dre2n.itemsxl.item.ItemBox;
@@ -29,7 +29,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Daniel Saukel
  */
-public class OpenCommand extends BRCommand {
+public class OpenCommand extends DRECommand {
 
     ItemsXL plugin = ItemsXL.getInstance();
 

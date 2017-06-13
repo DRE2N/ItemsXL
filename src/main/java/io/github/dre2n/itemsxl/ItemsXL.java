@@ -25,12 +25,12 @@ import io.github.dre2n.caliburn.mob.MobCategories;
 import io.github.dre2n.caliburn.mob.Mobs;
 import io.github.dre2n.caliburn.mob.UniversalMob;
 import io.github.dre2n.caliburn.util.CaliConfiguration;
-import io.github.dre2n.commons.command.BRCommandCache;
+import io.github.dre2n.commons.command.DRECommandCache;
 import io.github.dre2n.commons.compatibility.Internals;
 import io.github.dre2n.commons.config.MessageConfig;
-import io.github.dre2n.commons.javaplugin.BRPlugin;
-import io.github.dre2n.commons.javaplugin.BRPluginSettings;
-import io.github.dre2n.commons.util.FileUtil;
+import io.github.dre2n.commons.javaplugin.DREPlugin;
+import io.github.dre2n.commons.javaplugin.DREPluginSettings;
+import io.github.dre2n.commons.misc.FileUtil;
 import io.github.dre2n.itemsxl.command.*;
 import io.github.dre2n.itemsxl.config.IConfig;
 import io.github.dre2n.itemsxl.config.IMessage;
@@ -43,7 +43,7 @@ import org.bukkit.entity.EntityType;
 /**
  * @author Daniel Saukel
  */
-public class ItemsXL extends BRPlugin {
+public class ItemsXL extends DREPlugin {
 
     CaliburnAPI api;
 
@@ -54,7 +54,7 @@ public class ItemsXL extends BRPlugin {
 
     private IConfig iConfig;
     private MessageConfig messageConfig;
-    private BRCommandCache iCommands;
+    private DRECommandCache iCommands;
 
     public ItemsXL() {
         /*
@@ -71,7 +71,7 @@ public class ItemsXL extends BRPlugin {
          * ##########################
          */
 
-        settings = new BRPluginSettings(false, true, false, false, true, 14472, Internals.andHigher(Internals.v1_9_R1));
+        settings = new DREPluginSettings(false, true, false, false, true, 14472, Internals.andHigher(Internals.v1_9_R1));
     }
 
     @Override
@@ -136,7 +136,7 @@ public class ItemsXL extends BRPlugin {
      * @return the iCommands
      */
     @Override
-    public BRCommandCache getCommandCache() {
+    public DRECommandCache getCommandCache() {
         return iCommands;
     }
 
@@ -145,7 +145,7 @@ public class ItemsXL extends BRPlugin {
      * the iCommands to set
      */
     public void loadICommands() {
-        iCommands = new BRCommandCache(
+        iCommands = new DRECommandCache(
                 "itemsxl",
                 this,
                 new HelpCommand(),
