@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2017 Daniel Saukel
+ * Copyright (C) 2015-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,17 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.itemsxl.item;
+package de.erethon.itemsxl.item;
 
-import io.github.dre2n.caliburn.CaliburnAPI;
-import io.github.dre2n.caliburn.item.Items;
-import io.github.dre2n.caliburn.item.UniversalItem;
-import io.github.dre2n.commons.chat.MessageUtil;
-import io.github.dre2n.itemsxl.ItemsXL;
-import io.github.dre2n.itemsxl.config.IConfig;
-import io.github.dre2n.itemsxl.config.IMessage;
+import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.item.ExItem;
+import de.erethon.caliburn.item.VanillaItem;
+import de.erethon.commons.chat.MessageUtil;
+import de.erethon.itemsxl.ItemsXL;
+import de.erethon.itemsxl.config.IConfig;
+import de.erethon.itemsxl.config.IMessage;
 import java.util.Arrays;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -34,20 +33,24 @@ import org.bukkit.inventory.meta.SkullMeta;
  */
 public class ItemBox {
 
-    static ItemsXL plugin = ItemsXL.getInstance();
-    static IConfig config = plugin.getIConfig();
-    static Items items = CaliburnAPI.getInstance().getItems();
+    private ItemsXL plugin;
+    private CaliburnAPI api;
+    private IConfig config;
 
-    private UniversalItem item;
+    private ExItem item;
 
-    public ItemBox(UniversalItem item) {
+    public ItemBox(ItemsXL plugin, ExItem item) {
+        this.plugin = plugin;
+        api = plugin.getAPI();
+        config = plugin.getIConfig();
+
         this.item = item;
     }
 
     /**
      * @return the item
      */
-    public UniversalItem getItem() {
+    public ExItem getItem() {
         return item;
     }
 
@@ -55,7 +58,7 @@ public class ItemBox {
      * @param item
      * the item to set
      */
-    public void setItem(UniversalItem item) {
+    public void setItem(ExItem item) {
         this.item = item;
     }
 
@@ -63,7 +66,7 @@ public class ItemBox {
      * @return the box
      */
     public ItemStack toItemStack(int amount) {
-        ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, amount, (short) 3);
+        ItemStack itemStack = VanillaItem.PLAYER_HEAD.toItemStack(amount);
         SkullMeta meta = (SkullMeta) itemStack.getItemMeta();
         meta.setDisplayName(config.getBoxName());
         meta.setOwner("MHF_Chest");
@@ -76,11 +79,11 @@ public class ItemBox {
      * @return the item in the box
      */
     public boolean open(Player player) {
-        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        ItemStack itemStack = player.getInventory().getItemInHand();
         String name = itemStack.getItemMeta().getDisplayName();
 
         if (name.equals(config.getBoxName())) {
-            UniversalItem item = items.getById(items.getCustomItemId(itemStack));
+            ExItem item = api.getExItem(itemStack);
             player.getInventory().remove(itemStack);
             player.getInventory().addItem(item.toItemStack(itemStack.getAmount()));
 
@@ -94,11 +97,11 @@ public class ItemBox {
     }
 
     /* Statics */
-    public static ItemBox getByItemStack(ItemStack itemStack) {
+    public static ItemBox getByItemStack(ItemsXL plugin, ItemStack itemStack) {
         if (itemStack.hasItemMeta()) {
 
-            if (config.getBoxName().equals(itemStack.getItemMeta().getDisplayName())) {
-                return new ItemBox(items.getById(items.getCustomItemId(itemStack)));
+            if (plugin.getIConfig().getBoxName().equals(itemStack.getItemMeta().getDisplayName())) {
+                return new ItemBox(plugin, plugin.getAPI().getExItem(itemStack));
 
             } else {
                 return null;

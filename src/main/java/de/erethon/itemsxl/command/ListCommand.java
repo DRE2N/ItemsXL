@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2017 Daniel Saukel
+ * Copyright (C) 2015-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.itemsxl.command;
+package de.erethon.itemsxl.command;
 
-import io.github.dre2n.caliburn.CaliburnAPI;
-import io.github.dre2n.caliburn.item.UniversalItem;
-import io.github.dre2n.commons.chat.MessageUtil;
-import io.github.dre2n.commons.command.DRECommand;
-import io.github.dre2n.commons.misc.NumberUtil;
-import io.github.dre2n.itemsxl.ItemsXL;
-import io.github.dre2n.itemsxl.config.IMessage;
+import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.item.ExItem;
+import de.erethon.commons.chat.MessageUtil;
+import de.erethon.commons.command.DRECommand;
+import de.erethon.commons.misc.NumberUtil;
+import de.erethon.itemsxl.ItemsXL;
+import de.erethon.itemsxl.config.IMessage;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.command.CommandSender;
@@ -32,9 +32,10 @@ import org.bukkit.command.CommandSender;
  */
 public class ListCommand extends DRECommand {
 
-    CaliburnAPI api = CaliburnAPI.getInstance();
+    private CaliburnAPI api;
 
-    public ListCommand() {
+    public ListCommand(ItemsXL plugin) {
+        api = plugin.getAPI();
         setCommand("list");
         setMinArgs(0);
         setMaxArgs(1);
@@ -46,8 +47,8 @@ public class ListCommand extends DRECommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        List<UniversalItem> iItemList = api.getItems().getItems();
-        ArrayList<UniversalItem> toSend = new ArrayList<>();
+        List<ExItem> iItemList = api.getExItems();
+        ArrayList<ExItem> toSend = new ArrayList<>();
 
         int page = 1;
         if (args.length == 2) {
@@ -56,7 +57,7 @@ public class ListCommand extends DRECommand {
         int send = 0;
         int max = 0;
         int min = 0;
-        for (UniversalItem iItem : iItemList) {
+        for (ExItem iItem : iItemList) {
             if (sender.hasPermission("ixl.list." + iItem.getId())) {
                 send++;
                 if (send >= page * 5 - 4 && send <= page * 5) {
@@ -69,10 +70,7 @@ public class ListCommand extends DRECommand {
 
         MessageUtil.sendPluginTag(sender, ItemsXL.getInstance());
         MessageUtil.sendCenteredMessage(sender, "&4&l[ &6" + min + "-" + max + " &4/&6 " + send + " &4|&6 " + page + " &4&l]");
-
-        for (UniversalItem iItem : toSend) {
-            MessageUtil.sendMessage(sender, "&b" + iItem.getId() + "&7 | &e" + iItem.getClass().getSimpleName() + "&7 | &e" + iItem.getMaterial());
-        }
+        toSend.forEach(i -> MessageUtil.sendMessage(sender, "&b" + i.getId() + "&7 | &e" + i.getClass().getSimpleName() + "&7 | &e" + i.getMaterial()));
     }
 
 }

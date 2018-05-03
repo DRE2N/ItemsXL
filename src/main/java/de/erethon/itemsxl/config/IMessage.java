@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2017 Daniel Saukel
+ * Copyright (C) 2015-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.itemsxl.config;
+package de.erethon.itemsxl.config;
 
-import io.github.dre2n.commons.config.Message;
-import io.github.dre2n.itemsxl.ItemsXL;
+import de.erethon.commons.config.Message;
+import de.erethon.commons.javaplugin.DREPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -31,8 +31,9 @@ public enum IMessage implements Message {
     ERROR_NO_CONSOLE_COMMAND("error.noConsoleCommand", "&cThe command &o&v1&r&c is not a console command!"),
     ERROR_NO_ITEM_BOX("error.noItemBox", "&cThis is not a valid item box."),
     ERROR_NO_PLAYER_COMMAND("error.noPlayerCommand", "&cThe command &o&v1&r&c is not a player command!"),
+    COMMAND_GIVE_SUCCESS("command.give.success", "&7You gave &o&v1x &v2&7 to &o&v3&7."),
     COMMAND_MAIN_WELCOME("command.main.welcome", "&7Welcome to &4Items&fXL"),
-    COMMAND_MAIN_LOADED("command.main.loaded", "&eItems loaded: &o[&v1]"),// &eRecipes loaded: &o[&v2]"),
+    COMMAND_MAIN_LOADED("command.main.loaded", "&eItems loaded: &o[&v1] (custom) &e| &o[&v2] (vanilla)"),// &eRecipes loaded: &o[&v2]"),
     COMMAND_MAIN_COMPATIBILITY("command.main.compatibility", "&eInternals: &o[&v1]"),
     COMMAND_MAIN_HELP("command.main.help", "&7Type in &o/ixl help&r&7 for further information."),
     COMMAND_OPEN_SUCCESS("command.open.success", "&7You opened the box. You found the item &o&v1&7!"),
@@ -69,7 +70,7 @@ public enum IMessage implements Message {
 
     @Override
     public String getMessage(String... args) {
-        return ItemsXL.getInstance().getMessageConfig().getMessage(this, args);
+        return DREPlugin.getInstance().getMessageConfig().getMessage(this, args);
     }
 
     @Override
@@ -79,8 +80,8 @@ public enum IMessage implements Message {
 
     /* Statics */
     /**
-     * @param identifer
-     * the identifer to set
+     * @param identifier
+     * the identifier to set
      */
     public static Message getByIdentifier(String identifier) {
         for (Message message : values()) {

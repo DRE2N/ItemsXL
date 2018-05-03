@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2017 Daniel Saukel
+ * Copyright (C) 2015-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.itemsxl.command;
+package de.erethon.itemsxl.command;
 
-import io.github.dre2n.commons.chat.MessageUtil;
-import io.github.dre2n.commons.command.DRECommand;
-import io.github.dre2n.commons.misc.NumberUtil;
-import io.github.dre2n.itemsxl.ItemsXL;
-import io.github.dre2n.itemsxl.config.IMessage;
+import de.erethon.commons.chat.MessageUtil;
+import de.erethon.commons.command.DRECommand;
+import de.erethon.commons.misc.NumberUtil;
+import de.erethon.itemsxl.ItemsXL;
+import de.erethon.itemsxl.config.IMessage;
 import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.command.CommandSender;
@@ -30,9 +30,10 @@ import org.bukkit.command.CommandSender;
  */
 public class HelpCommand extends DRECommand {
 
-    ItemsXL plugin = ItemsXL.getInstance();
+    private ItemsXL plugin;
 
-    public HelpCommand() {
+    public HelpCommand(ItemsXL plugin) {
+        this.plugin = plugin;
         setCommand("help");
         setMinArgs(0);
         setMaxArgs(1);
@@ -43,7 +44,7 @@ public class HelpCommand extends DRECommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        Set<DRECommand> commandList = ItemsXL.getInstance().getCommandCache().getCommands();
+        Set<DRECommand> commandList = plugin.getCommandCache().getCommands();
         Set<DRECommand> toSend = new HashSet<>();
 
         int page = 1;

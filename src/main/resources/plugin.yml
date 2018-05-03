@@ -1,5 +1,5 @@
 name: ItemsXL
-main: io.github.dre2n.itemsxl.ItemsXL
+main: de.erethon.itemsxl.ItemsXL
 version: ${project.version}
 author: Daniel Saukel
 description: ${project.description}${buildNo}

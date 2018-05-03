@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2017 Daniel Saukel
+ * Copyright (C) 2015-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.itemsxl.config;
+package de.erethon.itemsxl.config;
 
-import io.github.dre2n.caliburn.CaliburnAPI;
-import io.github.dre2n.commons.config.DREConfig;
+import de.erethon.commons.config.DREConfig;
 import java.io.File;
 import org.bukkit.ChatColor;
 
@@ -29,9 +28,8 @@ public class IConfig extends DREConfig {
     public static final int CONFIG_VERSION = 1;
 
     private String language = "english";
-
     private boolean builtInItems = true;
-
+    private String identifierPrefix = "&7";
     private String boxName = "&6Mysterious Box";
     private String advancedWorkbenchName = "&6Advanced Workbench";
 
@@ -52,18 +50,17 @@ public class IConfig extends DREConfig {
     }
 
     /**
-     * @param language
-     * the language to set
+     * @return whether or not the built-in items should be loaded
      */
-    public void setLanguage(String language) {
-        this.language = language;
+    public boolean areBuiltInItemsEnabled() {
+        return builtInItems;
     }
 
     /**
-     * @return whether or not the built-in items should be loaded
+     * @return the prefix used to identify IXL items
      */
-    public boolean enableBuiltInItems() {
-        return builtInItems;
+    public String getIdentifierPrefix() {
+        return identifierPrefix;
     }
 
     /**
@@ -85,13 +82,11 @@ public class IConfig extends DREConfig {
         if (!config.contains("language")) {
             config.set("language", language);
         }
-
         if (!config.contains("builtInItems")) {
             config.set("builtInItems", builtInItems);
         }
-
         if (!config.contains("identifierPrefix")) {
-            config.set("identifierPrefix", CaliburnAPI.IDENTIFIER_PREFIX);
+            config.set("identifierPrefix", identifierPrefix);
         }
         if (!config.contains("boxNames")) {
             config.set("boxName", boxName);
@@ -105,23 +100,11 @@ public class IConfig extends DREConfig {
 
     @Override
     public void load() {
-        if (config.contains("language")) {
-            language = config.getString("language");
-        }
-
-        if (!config.contains("builtInItems")) {
-            builtInItems = config.getBoolean("builtInItems");
-        }
-
-        if (!config.contains("identifierPrefix")) {
-            CaliburnAPI.IDENTIFIER_PREFIX = ChatColor.translateAlternateColorCodes('&', config.getString("identifierPrefix"));
-        }
-        if (!config.contains("boxNames")) {
-            boxName = config.getString("boxName");
-        }
-        if (!config.contains("advancedWorkbenchName")) {
-            advancedWorkbenchName = config.getString("advancedWorkbenchName");
-        }
+        language = config.getString("language", language);
+        builtInItems = config.getBoolean("builtInItems", builtInItems);
+        identifierPrefix = config.getString("identifierPrefix", identifierPrefix);
+        boxName = config.getString("boxName", boxName);
+        advancedWorkbenchName = config.getString("advancedWorkbenchName", advancedWorkbenchName);
     }
 
 }

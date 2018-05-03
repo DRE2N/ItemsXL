@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2017 Daniel Saukel
+ * Copyright (C) 2015-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,28 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.itemsxl.command;
+package de.erethon.itemsxl.command;
 
-import io.github.dre2n.caliburn.CaliburnAPI;
-import io.github.dre2n.caliburn.item.UniversalItemStack;
-import io.github.dre2n.commons.chat.MessageUtil;
-import io.github.dre2n.commons.command.DRECommand;
-import io.github.dre2n.itemsxl.ItemsXL;
-import io.github.dre2n.itemsxl.config.IMessage;
+import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.commons.chat.MessageUtil;
+import de.erethon.commons.command.DRECommand;
+import de.erethon.itemsxl.ItemsXL;
+import de.erethon.itemsxl.config.IMessage;
 import java.io.File;
 import java.io.IOException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Daniel Saukel
  */
 public class SerializeCommand extends DRECommand {
 
-    public SerializeCommand() {
+    private ItemsXL plugin;
+    private CaliburnAPI api;
+
+    public SerializeCommand(ItemsXL plugin) {
+        this.plugin = plugin;
+        api = plugin.getAPI();
         setCommand("serialize");
         setMinArgs(0);
         setMaxArgs(1);
@@ -54,10 +58,12 @@ public class SerializeCommand extends DRECommand {
             type = args[1];
         }
 
-        ConfigurationSerializable serializable = player.getInventory().getItemInMainHand();
+        ItemStack item = player.getInventory().getItemInHand();
+        Object serialized = item;
 
-        if (type.equalsIgnoreCase("caliburn")) {
-            serializable = new UniversalItemStack(CaliburnAPI.getInstance().getItems(), player.getInventory().getItemInMainHand());
+        if (type.equalsIgnoreCase("simple")) {
+            serialized = api.getSimpleSerialization().serialize(item);
+            MessageUtil.sendMessage(sender, (String) serialized);
         }
 
         File file = new File(ItemsXL.getInstance().getDataFolder(), "serialized.yml");
@@ -70,7 +76,7 @@ public class SerializeCommand extends DRECommand {
         }
 
         FileConfiguration config = new YamlConfiguration();
-        config.set("serialized", serializable);
+        config.set("serialized", item);
         try {
             config.save(file);
         } catch (IOException exception) {

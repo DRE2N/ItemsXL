@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2017 Daniel Saukel
+ * Copyright (C) 2015-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.itemsxl.listener;
+package de.erethon.itemsxl.item;
 
-import io.github.dre2n.itemsxl.item.ItemBox;
+import de.erethon.itemsxl.ItemsXL;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -25,12 +25,18 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Daniel Saukel
  */
-public class BlockListener implements Listener {
+public class ItemBoxListener implements Listener {
+
+    private ItemsXL plugin;
+
+    public ItemBoxListener(ItemsXL plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onPlaceBlock(BlockPlaceEvent event) {
         ItemStack itemStack = event.getPlayer().getInventory().getItemInMainHand();
-        ItemBox box = ItemBox.getByItemStack(itemStack);
+        ItemBox box = ItemBox.getByItemStack(plugin, itemStack);
 
         if (box != null) {
             box.open(event.getPlayer());

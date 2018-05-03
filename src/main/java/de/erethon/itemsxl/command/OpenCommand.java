@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2017 Daniel Saukel
+ * Copyright (C) 2015-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.itemsxl.command;
+package de.erethon.itemsxl.command;
 
-import io.github.dre2n.commons.chat.MessageUtil;
-import io.github.dre2n.commons.command.DRECommand;
-import io.github.dre2n.itemsxl.ItemsXL;
-import io.github.dre2n.itemsxl.config.IMessage;
-import io.github.dre2n.itemsxl.item.ItemBox;
-import org.bukkit.Material;
+import de.erethon.caliburn.item.VanillaItem;
+import de.erethon.commons.chat.MessageUtil;
+import de.erethon.commons.command.DRECommand;
+import de.erethon.itemsxl.ItemsXL;
+import de.erethon.itemsxl.config.IMessage;
+import de.erethon.itemsxl.item.ItemBox;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -31,9 +31,10 @@ import org.bukkit.inventory.ItemStack;
  */
 public class OpenCommand extends DRECommand {
 
-    ItemsXL plugin = ItemsXL.getInstance();
+    private ItemsXL plugin;
 
-    public OpenCommand() {
+    public OpenCommand(ItemsXL plugin) {
+        this.plugin = plugin;
         setCommand("open");
         setMinArgs(0);
         setMaxArgs(0);
@@ -48,12 +49,12 @@ public class OpenCommand extends DRECommand {
 
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if (itemStack.getType() != Material.SKULL_ITEM) {
+        if (itemStack.getType() != VanillaItem.PLAYER_HEAD.getMaterial()) {
             MessageUtil.sendMessage(sender, IMessage.ERROR_NO_ITEM_BOX.getMessage());
             return;
         }
 
-        ItemBox box = ItemBox.getByItemStack(itemStack);
+        ItemBox box = ItemBox.getByItemStack(plugin, itemStack);
 
         if (box != null) {
             box.open(player);

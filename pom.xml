@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.dre2n</groupId>
+    <groupId>de.erethon</groupId>
     <artifactId>itemsxl</artifactId>
-    <version>0.3</version>
+    <version>0.4-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>ItemsXL</name>
     <url>https://dre2n.github.io</url>
@@ -11,7 +11,7 @@
         <buildNo></buildNo>
     </properties>
     <build>
-        <finalName>itemsxl-${project.version}${buildNo}</finalName>
+        <finalName>${project.artifactId}-${project.version}${buildNo}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
@@ -26,16 +26,16 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>3.7.0</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.3</version>
+                <version>3.1.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -45,14 +45,14 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>io.github.dre2n:commons</include>
-                                    <include>io.github.dre2n:caliburn</include>
+                                    <include>de.erethon:commons</include>
+                                    <include>de.erethon:caliburn</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
                                 <relocation>
-                                    <pattern>io.github.dre2n.commons</pattern>
-                                    <shadedPattern>io.github.dre2n.itemsxl.util.commons</shadedPattern>
+                                    <pattern>de.erethon.commons</pattern>
+                                    <shadedPattern>de.erethon.itemsxl.util.commons</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -65,18 +65,13 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.12-R0.1-SNAPSHOT</version>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>io.github.dre2n</groupId>
+            <groupId>de.erethon</groupId>
             <artifactId>caliburn</artifactId>
-            <version>0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.dre2n</groupId>
-            <artifactId>commons</artifactId>
-            <version>3.0</version>
+            <version>0.4-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <repositories>
@@ -85,8 +80,8 @@
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <repository>
-            <id>dre2n-repo</id>
-            <url>http://feuerstern.bplaced.net/repo/</url>
+            <id>dre-repo</id>
+            <url>http://erethon.de/repo/</url>
         </repository>
     </repositories>
 </project>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2017 Daniel Saukel
+ * Copyright (C) 2015-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.itemsxl.command;
+package de.erethon.itemsxl.command;
 
-import io.github.dre2n.caliburn.CaliburnAPI;
-import io.github.dre2n.caliburn.item.CustomItem;
-import io.github.dre2n.caliburn.item.UniversalItem;
-import io.github.dre2n.commons.chat.MessageUtil;
-import io.github.dre2n.commons.command.DRECommand;
-import io.github.dre2n.commons.compatibility.CompatibilityHandler;
-import io.github.dre2n.itemsxl.ItemsXL;
-import io.github.dre2n.itemsxl.config.IMessage;
+import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.item.CustomItem;
+import de.erethon.caliburn.item.VanillaItem;
+import de.erethon.commons.chat.MessageUtil;
+import de.erethon.commons.command.DRECommand;
+import de.erethon.commons.compatibility.CompatibilityHandler;
+import de.erethon.itemsxl.ItemsXL;
+import de.erethon.itemsxl.config.IMessage;
 import java.util.List;
 import org.bukkit.command.CommandSender;
 
@@ -32,9 +32,12 @@ import org.bukkit.command.CommandSender;
  */
 public class ReloadCommand extends DRECommand {
 
-    ItemsXL plugin = ItemsXL.getInstance();
+    private ItemsXL plugin;
+    private CaliburnAPI api;
 
-    public ReloadCommand() {
+    public ReloadCommand(ItemsXL plugin) {
+        this.plugin = plugin;
+        api = plugin.getAPI();
         setCommand("reload");
         setMinArgs(0);
         setMaxArgs(0);
@@ -46,16 +49,17 @@ public class ReloadCommand extends DRECommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        List<UniversalItem> iItemList = CaliburnAPI.getInstance().getItems().getItems(CustomItem.class);
+        List<CustomItem> ci = api.getExItems(CustomItem.class);
+        List<VanillaItem> vi = api.getExItems(VanillaItem.class);
 
         plugin.loadIConfig();
         plugin.loadMessageConfig();
-        plugin.loadICommands();
+        plugin.loadICommandCache();
         plugin.loadAPI();
 
         MessageUtil.sendPluginTag(sender, plugin);
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_RELOAD_SUCCESS.getMessage());
-        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_LOADED.getMessage(String.valueOf(iItemList.size())));
+        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_LOADED.getMessage(String.valueOf(ci.size()), String.valueOf(vi.size())));
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_COMPATIBILITY.getMessage(String.valueOf(CompatibilityHandler.getInstance().getInternals())));
     }
 
