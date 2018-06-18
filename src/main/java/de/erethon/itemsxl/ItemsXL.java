@@ -20,6 +20,7 @@ import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.category.Category;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
+import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.commons.command.DRECommandCache;
@@ -49,9 +50,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
  * @author Daniel Saukel
  */
 public class ItemsXL extends DREPlugin {
-
-    public static File ITEMS;
-    public static File MOBS;
 
     private CaliburnAPI api;
 
@@ -254,7 +252,7 @@ public class ItemsXL extends DREPlugin {
         custom.mkdirs();
 
         for (File file : FileUtil.getFilesForFolder(custom)) {
-            ExMob mob = null;
+            ExMob mob = ExMob.deserialize(YamlConfiguration.loadConfiguration(file).getValues(true));
             String id = file.getName().substring(0, file.getName().length() - 4);
             mobs.add((ExMob) mob.id(id));
         }
@@ -288,6 +286,15 @@ public class ItemsXL extends DREPlugin {
             mob.setRaw(config.getValues(true));
             mobs.add(mob);
         }
+    }
+
+    /**
+     * load / reload loot tables
+     */
+    public void loadLootTables() {
+        File custom = new File(getDataFolder() + "/custom/loottables");
+        custom.mkdirs();
+        FileUtil.getFilesForFolder(custom).forEach(f -> api.getLootTables().add(new LootTable(api, f)));
     }
 
 }

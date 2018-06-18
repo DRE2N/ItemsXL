@@ -17,7 +17,6 @@
 package de.erethon.itemsxl.config;
 
 import de.erethon.commons.config.Message;
-import de.erethon.commons.javaplugin.DREPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -64,13 +63,8 @@ public enum IMessage implements Message {
     }
 
     @Override
-    public String getMessage() {
+    public String getRaw() {
         return message;
-    }
-
-    @Override
-    public String getMessage(String... args) {
-        return DREPlugin.getInstance().getMessageConfig().getMessage(this, args);
     }
 
     @Override
@@ -89,7 +83,6 @@ public enum IMessage implements Message {
                 return message;
             }
         }
-
         return null;
     }
 
@@ -101,7 +94,6 @@ public enum IMessage implements Message {
         for (IMessage message : values()) {
             config.set(message.getIdentifier(), message.message);
         }
-
         return config;
     }
 
