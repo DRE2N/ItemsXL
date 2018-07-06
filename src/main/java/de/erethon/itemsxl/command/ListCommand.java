@@ -17,7 +17,12 @@
 package de.erethon.itemsxl.command;
 
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.category.Categorizable;
+import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
+import de.erethon.caliburn.item.VanillaItem;
+import de.erethon.caliburn.mob.CustomMob;
+import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.command.DRECommand;
 import de.erethon.commons.misc.NumberUtil;
@@ -38,7 +43,7 @@ public class ListCommand extends DRECommand {
         api = plugin.getAPI();
         setCommand("list");
         setMinArgs(0);
-        setMaxArgs(1);
+        setMaxArgs(2);
         setHelp(IMessage.COMMAND_HELP_LIST.getMessage());
         setPermission("ixl.list");
         setPlayerCommand(true);
@@ -47,30 +52,48 @@ public class ListCommand extends DRECommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        List<ExItem> iItemList = api.getExItems();
-        ArrayList<ExItem> toSend = new ArrayList<>();
+        int i = 1;
+        List<?> objects = null;
+        if (args.length > 1) {
+            i++;
+            if (args[1].equalsIgnoreCase("ci")) {
+                objects = api.getExItems(CustomItem.class);
+            } else if (args[1].equalsIgnoreCase("vi")) {
+                objects = api.getExItems(VanillaItem.class);
+            } else if (args[1].equalsIgnoreCase("cm")) {
+                objects = api.getExMobs(CustomMob.class);
+            } else if (args[1].equalsIgnoreCase("vm")) {
+                objects = api.getExMobs(VanillaMob.class);
+            } else {
+                objects = api.getExItems();
+            }
+        } else {
+            objects = api.getExItems();
+        }
+        List<Object> toSend = new ArrayList<>();
 
         int page = 1;
-        if (args.length == 2) {
-            page = NumberUtil.parseInt(args[1], 1);
+        if (args.length == i + 1) {
+            page = NumberUtil.parseInt(args[i], 1);
         }
         int send = 0;
         int max = 0;
         int min = 0;
-        for (ExItem iItem : iItemList) {
-            if (sender.hasPermission("ixl.list." + iItem.getId())) {
+        for (Object object : objects) {
+            if (sender.hasPermission("ixl.list." + ((Categorizable) object).getId())) {
                 send++;
                 if (send >= page * 5 - 4 && send <= page * 5) {
                     min = page * 5 - 4;
                     max = page * 5;
-                    toSend.add(iItem);
+                    toSend.add(object);
                 }
             }
         }
 
         MessageUtil.sendPluginTag(sender, ItemsXL.getInstance());
         MessageUtil.sendCenteredMessage(sender, "&4&l[ &6" + min + "-" + max + " &4/&6 " + send + " &4|&6 " + page + " &4&l]");
-        toSend.forEach(i -> MessageUtil.sendMessage(sender, "&b" + i.getId() + "&7 | &e" + i.getClass().getSimpleName() + "&7 | &e" + i.getMaterial()));
+        toSend.forEach(o -> MessageUtil.sendMessage(sender, "&b" + ((Categorizable) o).getId() + "&7 | &e" + o.getClass().getSimpleName()
+                + ((o instanceof ExItem) ? "&7 | &e" + ((ExItem) o).getMaterial() : "")));
     }
 
 }
