@@ -43,6 +43,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map.Entry;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -148,7 +149,7 @@ public class ItemsXL extends DREPlugin {
      * load / reload a new instance of CaliburnAPI
      */
     public void loadAPI() {
-        api = new CaliburnAPI(this, iConfig.getIdentifierPrefix());
+        api = new CaliburnAPI(this, ChatColor.translateAlternateColorCodes('&', iConfig.getIdentifierPrefix()));
         loadItems();
         loadMobs();
         loadItemCategories();
