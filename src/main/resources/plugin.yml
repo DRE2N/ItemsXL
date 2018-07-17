@@ -18,3 +18,4 @@ permissions:
   ixl.reload:
     description: Reload all config files.
     default: op
+api-version: 1.13

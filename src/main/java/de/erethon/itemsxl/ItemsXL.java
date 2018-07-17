@@ -26,6 +26,7 @@ import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.commons.command.DRECommandCache;
 import de.erethon.commons.compatibility.Internals;
 import de.erethon.commons.config.MessageConfig;
+import de.erethon.commons.config.RawConfiguration;
 import de.erethon.commons.javaplugin.DREPlugin;
 import de.erethon.commons.javaplugin.DREPluginSettings;
 import de.erethon.commons.misc.FileUtil;
@@ -44,8 +45,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map.Entry;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
  * @author Daniel Saukel
@@ -170,9 +169,9 @@ public class ItemsXL extends DREPlugin {
             }
         }
 
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        for (Entry<String, Object> entry : config.getValues(true).entrySet()) {
-            api.getItemCategories().add(new Category<>(api, entry.getKey(), (List<String>) entry.getValue()));
+        RawConfiguration config = RawConfiguration.loadConfiguration(file);
+        for (Object entry : config.getArgs().entrySet()) {
+            api.getItemCategories().add(new Category<>(api, ((Entry) entry).getKey().toString(), (List<String>) ((Entry) entry).getValue()));
         }
     }
 
@@ -189,9 +188,9 @@ public class ItemsXL extends DREPlugin {
             }
         }
 
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        for (Entry<String, Object> entry : config.getValues(true).entrySet()) {
-            api.getItemCategories().add(new Category<>(api, entry.getKey(), (List<String>) entry.getValue()));
+        RawConfiguration config = RawConfiguration.loadConfiguration(file);
+        for (Object entry : config.getArgs().entrySet()) {
+            api.getItemCategories().add(new Category<>(api, ((Entry) entry).getKey().toString(), (List<String>) ((Entry) entry).getValue()));
         }
     }
 
@@ -205,7 +204,8 @@ public class ItemsXL extends DREPlugin {
         custom.mkdirs();
 
         for (File file : FileUtil.getFilesForFolder(custom)) {
-            ExItem item = ExItem.deserialize(YamlConfiguration.loadConfiguration(file).getValues(true));
+            RawConfiguration config = RawConfiguration.loadConfiguration(file);
+            ExItem item = ExItem.deserialize(config.getArgs());
             String id = file.getName().substring(0, file.getName().length() - 4);
             items.add((ExItem) item.id(id));
         }
@@ -217,7 +217,7 @@ public class ItemsXL extends DREPlugin {
 
         for (VanillaItem item : VanillaItem.getLoaded()) {
             File file = new File(vanilla, item.getId() + ".yml");
-            FileConfiguration config;
+            RawConfiguration config;
             if (!file.exists()) {
                 try {
                     file.createNewFile();
@@ -225,7 +225,7 @@ public class ItemsXL extends DREPlugin {
                     exception.printStackTrace();
                 }
 
-                config = YamlConfiguration.loadConfiguration(file);
+                config = RawConfiguration.loadConfiguration(file);
                 config.createSection("categoryDamageModifiers");
                 config.createSection("mobDamageModifiers");
                 try {
@@ -235,10 +235,10 @@ public class ItemsXL extends DREPlugin {
                 }
 
             } else {
-                config = YamlConfiguration.loadConfiguration(file);
+                config = RawConfiguration.loadConfiguration(file);
             }
 
-            item.setRaw(config.getValues(true));
+            item.setRaw(config.getArgs());
             items.add(item);
         }
     }
@@ -253,7 +253,8 @@ public class ItemsXL extends DREPlugin {
         custom.mkdirs();
 
         for (File file : FileUtil.getFilesForFolder(custom)) {
-            ExMob mob = ExMob.deserialize(YamlConfiguration.loadConfiguration(file).getValues(true));
+            RawConfiguration config = RawConfiguration.loadConfiguration(file);
+            ExMob mob = ExMob.deserialize(config.getArgs());
             String id = file.getName().substring(0, file.getName().length() - 4);
             mobs.add((ExMob) mob.id(id));
         }
@@ -263,7 +264,7 @@ public class ItemsXL extends DREPlugin {
 
         for (VanillaMob mob : VanillaMob.getLoaded()) {
             File file = new File(vanilla, mob.getId() + ".yml");
-            FileConfiguration config;
+            RawConfiguration config;
             if (!file.exists()) {
                 try {
                     file.createNewFile();
@@ -271,7 +272,7 @@ public class ItemsXL extends DREPlugin {
                     exception.printStackTrace();
                 }
 
-                config = YamlConfiguration.loadConfiguration(file);
+                config = RawConfiguration.loadConfiguration(file);
                 config.createSection("categoryDamageModifiers");
                 config.createSection("itemDamageModifiers");
                 try {
@@ -281,10 +282,10 @@ public class ItemsXL extends DREPlugin {
                 }
 
             } else {
-                config = YamlConfiguration.loadConfiguration(file);
+                config = RawConfiguration.loadConfiguration(file);
             }
 
-            mob.setRaw(config.getValues(true));
+            mob.setRaw(config.getArgs());
             mobs.add(mob);
         }
     }
