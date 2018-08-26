@@ -18,9 +18,11 @@ package de.erethon.itemsxl;
 
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.category.Category;
+import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
 import de.erethon.caliburn.loottable.LootTable;
+import de.erethon.caliburn.mob.CustomMob;
 import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.commons.command.DRECommandCache;
@@ -117,8 +119,7 @@ public class ItemsXL extends DREPlugin {
     }
 
     /**
-     * @param iCommands
-     * the iCommands to set
+     * load / reload a new instance of DRECommandCache
      */
     public void loadICommandCache() {
         iCommands = new DRECommandCache(
@@ -137,8 +138,7 @@ public class ItemsXL extends DREPlugin {
     }
 
     /**
-     * @return
-     * the loaded instance of CaliburnAPI
+     * @return the loaded instance of CaliburnAPI
      */
     public CaliburnAPI getAPI() {
         return api;
@@ -198,8 +198,6 @@ public class ItemsXL extends DREPlugin {
      * load / reload items
      */
     public void loadItems() {
-        List<ExItem> items = api.getExItems();
-
         File custom = new File(getDataFolder() + "/custom/items");
         custom.mkdirs();
 
@@ -207,7 +205,7 @@ public class ItemsXL extends DREPlugin {
             RawConfiguration config = RawConfiguration.loadConfiguration(file);
             ExItem item = ExItem.deserialize(config.getArgs());
             String id = file.getName().substring(0, file.getName().length() - 4);
-            items.add((ExItem) item.id(id));
+            ((CustomItem) item).register(id);
         }
 
         File vanilla = new File(getDataFolder() + "/vanilla/items");
@@ -239,7 +237,6 @@ public class ItemsXL extends DREPlugin {
             }
 
             item.setRaw(config.getArgs());
-            items.add(item);
         }
     }
 
@@ -247,8 +244,6 @@ public class ItemsXL extends DREPlugin {
      * load / reload mobs
      */
     public void loadMobs() {
-        List<ExMob> mobs = api.getExMobs();
-
         File custom = new File(getDataFolder() + "/custom/mobs");
         custom.mkdirs();
 
@@ -256,7 +251,7 @@ public class ItemsXL extends DREPlugin {
             RawConfiguration config = RawConfiguration.loadConfiguration(file);
             ExMob mob = ExMob.deserialize(config.getArgs());
             String id = file.getName().substring(0, file.getName().length() - 4);
-            mobs.add((ExMob) mob.id(id));
+            ((CustomMob) mob).register(id);
         }
 
         File vanilla = new File(getDataFolder() + "/vanilla/mobs");
@@ -286,7 +281,6 @@ public class ItemsXL extends DREPlugin {
             }
 
             mob.setRaw(config.getArgs());
-            mobs.add(mob);
         }
     }
 

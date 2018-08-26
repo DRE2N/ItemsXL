@@ -55,8 +55,7 @@ public class ItemBox {
     }
 
     /**
-     * @param item
-     * the item to set
+     * @param item the item to set
      */
     public void setItem(ExItem item) {
         this.item = item;

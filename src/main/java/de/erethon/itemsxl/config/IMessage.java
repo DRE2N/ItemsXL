@@ -74,8 +74,7 @@ public enum IMessage implements Message {
 
     /* Statics */
     /**
-     * @param identifier
-     * the identifier to set
+     * @param identifier the identifier to set
      */
     public static Message getByIdentifier(String identifier) {
         for (Message message : values()) {
