@@ -30,6 +30,7 @@ public enum IMessage implements Message {
     ERROR_NO_CONSOLE_COMMAND("error.noConsoleCommand", "&cThe command &o&v1&r&c is not a console command!"),
     ERROR_NO_ITEM_BOX("error.noItemBox", "&cThis is not a valid item box."),
     ERROR_NO_PLAYER_COMMAND("error.noPlayerCommand", "&cThe command &o&v1&r&c is not a player command!"),
+    ERROR_COORDS_NOT_NUMERIC("error.coordsNotNumeric", "&4Coordinates must be numeric."),
     COMMAND_GIVE_SUCCESS("command.give.success", "&7You gave &o&v1x &v2&7 to &o&v3&7."),
     COMMAND_MAIN_WELCOME("command.main.welcome", "&7Welcome to &4Items&fXL"),
     COMMAND_MAIN_LOADED("command.main.loaded", "&eItems loaded: &o[&v1] (custom) &e| &o[&v2] (vanilla)"),// &eRecipes loaded: &o[&v2]"),
@@ -38,16 +39,19 @@ public enum IMessage implements Message {
     COMMAND_OPEN_SUCCESS("command.open.success", "&7You opened the box. You found the item &o&v1&7!"),
     COMMAND_RELOAD_SUCCESS("command.reload.success", "&7Successfully reloaded ItemsXL."),
     COMMAND_SERIALIZE_SUCCESS("command.serialize.success", "&7Successfully serialized item. Have a look at the &oItemsXL/serialized.yml&r&7 file."),
-    COMMAND_HELP_GIVE("help.give", "&7Give an item to a player. Usage: &o/ixl give [player=you] [id] ([amount=1]) (box)"),
-    COMMAND_HELP_HELP("help.help", "&7Show command help. Usage: &o/ixl help [page]"),
-    COMMAND_HELP_INFO("help.info", "&7Show information about an item. Usage: &o/ixl info [item]"),
-    COMMAND_HELP_LIST("help.list", "&7List all custom items. Usage: &o/ixl list [page]"),
-    COMMAND_HELP_MAIN("help.main", "&7General status information."),
-    COMMAND_HELP_OPEN("help.open", "&7Open the item box in your hand."),
-    COMMAND_HELP_RELOAD("help.reload", "&7Reload all configs and data. Usage: &o/ixl reload"),
-    COMMAND_HELP_SERIALIZE("help.serialize", "&7Serialize the item stack in your hand. Usage: &o/ixl serialize ([bukkit|caliburn])"),
+    HELP_GIVE("help.give", "&7Give an item to a player. Usage: &o/ixl give [player=you] [id] ([amount=1]) (box)"),
+    HELP_HELP("help.help", "&7Show command help. Usage: &o/ixl help [page]"),
+    HELP_INFO("help.info", "&7Show information about an item. Usage: &o/ixl info [item]"),
+    HELP_LIST("help.list", "&7List all custom items. Usage: &o/ixl list [page]"),
+    HELP_MAIN("help.main", "&7General status information."),
+    HELP_OPEN("help.open", "&7Open the item box in your hand."),
+    HELP_RELOAD("help.reload", "&7Reload all configs and data. Usage: &o/ixl reload"),
+    HELP_SERIALIZE("help.serialize", "&7Serialize the item stack in your hand. Usage: &o/ixl serialize ([bukkit|caliburn])"),
+    HELP_SUMMON("help.summon", "&7Summons a mob. Usage: &o: /ixl summon [mob] ([world x y z yaw pitch])"),
     OBJECT_PLAYER("object.player", "player"),
-    OBJECT_ITEM("object.item", "item");
+    OBJECT_ITEM("object.item", "item"),
+    OBJECT_MOB("object.mob", "mob"),
+    OBJECT_WORLD("object.world", "world");
 
     private String identifier;
     private String message;

@@ -40,7 +40,7 @@ public class MainCommand extends DRECommand {
         this.plugin = plugin;
         api = plugin.getAPI();
         setCommand("main");
-        setHelp(IMessage.COMMAND_HELP_MAIN.getMessage());
+        setHelp(IMessage.HELP_MAIN.getMessage());
         setPlayerCommand(true);
         setConsoleCommand(true);
     }

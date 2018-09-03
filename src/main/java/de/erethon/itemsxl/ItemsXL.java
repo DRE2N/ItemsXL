@@ -32,13 +32,7 @@ import de.erethon.commons.config.RawConfiguration;
 import de.erethon.commons.javaplugin.DREPlugin;
 import de.erethon.commons.javaplugin.DREPluginSettings;
 import de.erethon.commons.misc.FileUtil;
-import de.erethon.itemsxl.command.GiveCommand;
-import de.erethon.itemsxl.command.HelpCommand;
-import de.erethon.itemsxl.command.ListCommand;
-import de.erethon.itemsxl.command.MainCommand;
-import de.erethon.itemsxl.command.OpenCommand;
-import de.erethon.itemsxl.command.ReloadCommand;
-import de.erethon.itemsxl.command.SerializeCommand;
+import de.erethon.itemsxl.command.*;
 import de.erethon.itemsxl.config.IConfig;
 import de.erethon.itemsxl.config.IMessage;
 import de.erethon.itemsxl.item.ItemBoxListener;
@@ -46,7 +40,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map.Entry;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 /**
  * @author Daniel Saukel
@@ -131,7 +125,8 @@ public class ItemsXL extends DREPlugin {
                 new MainCommand(this),
                 new OpenCommand(this),
                 new ReloadCommand(this),
-                new SerializeCommand(this)
+                new SerializeCommand(this),
+                new SummonCommand(this)
         );
 
         iCommands.register(this);

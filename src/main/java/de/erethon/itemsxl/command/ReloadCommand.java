@@ -41,7 +41,7 @@ public class ReloadCommand extends DRECommand {
         setCommand("reload");
         setMinArgs(0);
         setMaxArgs(0);
-        setHelp(IMessage.COMMAND_HELP_RELOAD.getMessage());
+        setHelp(IMessage.HELP_RELOAD.getMessage());
         setPermission("ixl.reload");
         setPlayerCommand(true);
         setConsoleCommand(true);

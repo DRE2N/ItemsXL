@@ -1,21 +1,11 @@
-name: ItemsXL
-main: de.erethon.itemsxl.ItemsXL
-version: ${project.version}
+name: ${project.name}
+main: ${project.groupId}.${project.artifactId}.${project.name}
+version: ${project.version}${buildNo}
 author: Daniel Saukel
-description: ${project.description}${buildNo}
+description: ${project.description}
 website: ${project.url}
 commands:
   itemsxl:
     description: ItemsXL core command.
     aliases: [ixl]
-permissions:
-  ixl.give.*:
-    description: Get all IXL items.
-    default: op
-  ixl.info.*:
-    description: Get information about all IXL items.
-    default: true
-  ixl.reload:
-    description: Reload all config files.
-    default: op
 api-version: 1.13

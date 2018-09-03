@@ -44,7 +44,7 @@ public class ListCommand extends DRECommand {
         setCommand("list");
         setMinArgs(0);
         setMaxArgs(2);
-        setHelp(IMessage.COMMAND_HELP_LIST.getMessage());
+        setHelp(IMessage.HELP_LIST.getMessage());
         setPermission("ixl.list");
         setPlayerCommand(true);
         setConsoleCommand(true);

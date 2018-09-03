@@ -38,7 +38,7 @@ public class OpenCommand extends DRECommand {
         setCommand("open");
         setMinArgs(0);
         setMaxArgs(0);
-        setHelp(IMessage.COMMAND_HELP_OPEN.getMessage());
+        setHelp(IMessage.HELP_OPEN.getMessage());
         setPlayerCommand(true);
         setConsoleCommand(false);
     }

@@ -42,7 +42,7 @@ public class GiveCommand extends DRECommand {
         setCommand("give");
         setMinArgs(1);
         setMaxArgs(4);
-        setHelp(IMessage.COMMAND_HELP_GIVE.getMessage());
+        setHelp(IMessage.HELP_GIVE.getMessage());
         setPermission("ixl.give");
         setPlayerCommand(true);
         setConsoleCommand(true);

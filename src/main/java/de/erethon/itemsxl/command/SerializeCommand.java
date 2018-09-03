@@ -43,7 +43,7 @@ public class SerializeCommand extends DRECommand {
         setCommand("serialize");
         setMinArgs(0);
         setMaxArgs(1);
-        setHelp(IMessage.COMMAND_HELP_SERIALIZE.getMessage());
+        setHelp(IMessage.HELP_SERIALIZE.getMessage());
         setPlayerCommand(true);
         setConsoleCommand(true);
     }

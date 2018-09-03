@@ -37,7 +37,7 @@ public class HelpCommand extends DRECommand {
         setCommand("help");
         setMinArgs(0);
         setMaxArgs(1);
-        setHelp(IMessage.COMMAND_HELP_HELP.getMessage());
+        setHelp(IMessage.HELP_HELP.getMessage());
         setPlayerCommand(true);
         setConsoleCommand(true);
     }
