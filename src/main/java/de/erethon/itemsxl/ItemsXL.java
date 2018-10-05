@@ -53,21 +53,11 @@ public class ItemsXL extends DREPlugin {
     private DRECommandCache iCommands;
 
     public ItemsXL() {
-        /*
-         * ##########################
-         * ####~DREPluginSettings~###
-         * ##########################
-         * #~Internals~##~~v1_8_R1+~#
-         * #~SpigotAPI~##~~~false~~~#
-         * #~~~~UUID~~~##~~~~true~~~#
-         * #~~Economy~~##~~~false~~~#
-         * #Permissions##~~~false~~~#
-         * #~~Metrics~~##~~~~true~~~#
-         * #Resource ID##~~~14472~~~#
-         * ##########################
-         */
-
-        settings = new DREPluginSettings(false, true, false, false, true, 14472, Internals.andHigher(Internals.v1_8_R1));
+        settings = DREPluginSettings.builder()
+                .internals(Internals.andHigher(Internals.v1_8_R1))
+                .metrics(true)
+                .spigotMCResourceId(14472)
+                .build();
     }
 
     @Override
