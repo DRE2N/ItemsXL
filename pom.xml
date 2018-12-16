@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon</groupId>
     <artifactId>itemsxl</artifactId>
-    <version>0.5.3</version>
+    <version>0.5.4</version>
     <packaging>jar</packaging>
     <name>ItemsXL</name>
     <url>https://dre2n.github.io</url>
@@ -77,7 +77,7 @@
         <dependency>
             <groupId>de.erethon</groupId>
             <artifactId>commons</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.4</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
