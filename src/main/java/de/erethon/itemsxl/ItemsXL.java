@@ -19,11 +19,9 @@ package de.erethon.itemsxl;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.category.Category;
 import de.erethon.caliburn.item.CustomItem;
-import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
 import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.CustomMob;
-import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.commons.command.DRECommandCache;
 import de.erethon.commons.compatibility.Internals;
@@ -188,9 +186,9 @@ public class ItemsXL extends DREPlugin {
 
         for (File file : FileUtil.getFilesForFolder(custom)) {
             RawConfiguration config = RawConfiguration.loadConfiguration(file);
-            ExItem item = ExItem.deserialize(config.getArgs());
+            CustomItem item = new CustomItem(config.getArgs());
             String id = file.getName().substring(0, file.getName().length() - 4);
-            ((CustomItem) item).register(id);
+            item.register(id);
         }
 
         File vanilla = new File(getDataFolder() + "/vanilla/items");
@@ -234,9 +232,9 @@ public class ItemsXL extends DREPlugin {
 
         for (File file : FileUtil.getFilesForFolder(custom)) {
             RawConfiguration config = RawConfiguration.loadConfiguration(file);
-            ExMob mob = ExMob.deserialize(config.getArgs());
+            CustomMob mob = new CustomMob(config.getArgs());
             String id = file.getName().substring(0, file.getName().length() - 4);
-            ((CustomMob) mob).register(id);
+            mob.register(id);
         }
 
         File vanilla = new File(getDataFolder() + "/vanilla/mobs");

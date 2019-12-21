@@ -18,10 +18,8 @@ package de.erethon.itemsxl.command;
 
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.category.Categorizable;
-import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
-import de.erethon.caliburn.mob.CustomMob;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.command.DRECommand;
@@ -29,6 +27,7 @@ import de.erethon.commons.misc.NumberUtil;
 import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IMessage;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.bukkit.command.CommandSender;
 
@@ -53,17 +52,19 @@ public class ListCommand extends DRECommand {
     @Override
     public void onExecute(String[] args, CommandSender sender) {
         int i = 1;
-        List<?> objects = null;
+        Collection<?> objects = null;
         if (args.length > 1) {
             i++;
             if (args[1].equalsIgnoreCase("ci")) {
-                objects = api.getExItems(CustomItem.class);
+                objects = api.getCustomItems();
             } else if (args[1].equalsIgnoreCase("vi")) {
-                objects = api.getExItems(VanillaItem.class);
+                objects = VanillaItem.getLoaded();
             } else if (args[1].equalsIgnoreCase("cm")) {
-                objects = api.getExMobs(CustomMob.class);
+                objects = api.getCustomMobs();
             } else if (args[1].equalsIgnoreCase("vm")) {
-                objects = api.getExMobs(VanillaMob.class);
+                objects = VanillaMob.getLoaded();
+            } else if (args[1].equalsIgnoreCase("m")) {
+                objects = api.getExMobs();
             } else {
                 objects = api.getExItems();
             }

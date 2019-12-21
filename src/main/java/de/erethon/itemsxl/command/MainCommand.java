@@ -25,7 +25,7 @@ import de.erethon.commons.command.DRECommand;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IMessage;
-import java.util.List;
+import java.util.Collection;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -47,8 +47,8 @@ public class MainCommand extends DRECommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        List<CustomItem> ci = api.getExItems(CustomItem.class);
-        List<VanillaItem> vi = api.getExItems(VanillaItem.class);
+        Collection<CustomItem> ci = api.getCustomItems();
+        Collection<VanillaItem> vi = VanillaItem.getLoaded();
 
         MessageUtil.sendCenteredMessage(sender, "&4" + I[0] + T[0] + E[0] + M[0] + S[0] + "&f" + X[0] + L[0]);
         MessageUtil.sendCenteredMessage(sender, "&4" + I[1] + T[1] + E[1] + M[1] + S[1] + "&f" + X[1] + L[1]);
