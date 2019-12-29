@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel
+ * Copyright (C) 2015-2019 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

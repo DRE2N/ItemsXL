@@ -22,6 +22,7 @@
                 <directory>${basedir}/src/main/resources/</directory>
                 <includes>
                     <include>plugin.yml</include>
+                    <include>languages/*</include>
                 </includes>
             </resource>
         </resources>
@@ -48,6 +49,10 @@
                                     <pattern>de.erethon.commons</pattern>
                                     <shadedPattern>de.erethon.itemsxl.util.commons</shadedPattern>
                                 </relocation>
+                                <relocation>
+                                    <pattern>de.erethon.headlib</pattern>
+                                    <shadedPattern>de.erethon.itemsxl.util.headlib</shadedPattern>
+                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>
@@ -71,7 +76,7 @@
         <dependency>
             <groupId>de.erethon.commons</groupId>
             <artifactId>commons-dist</artifactId>
-            <version>6.0</version>
+            <version>6.1</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

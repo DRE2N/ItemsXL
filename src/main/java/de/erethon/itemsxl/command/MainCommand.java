@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel
+ * Copyright (C) 2015-2019 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ public class MainCommand extends DRECommand {
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_LOADED.getMessage(String.valueOf(ci.size()), String.valueOf(vi.size())));
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_COMPATIBILITY.getMessage(CompatibilityHandler.getInstance().getInternals().toString()));
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_HELP.getMessage());
-        MessageUtil.sendCenteredMessage(sender, "&7\u00a92015-2018 Daniel Saukel; licensed under GPLv3.");
+        MessageUtil.sendCenteredMessage(sender, "&7\u00a92015-2019 Daniel Saukel; licensed under GPLv3.");
     }
 
 }

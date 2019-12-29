@@ -1,0 +1,38 @@
+error:
+  noObject: '&cThis &v1 does not exist.'
+  noPermission: '&cYou do not have permission to use the command &o&v1&r&c.'
+  noConsoleCommand: '&cThe command &o&v1&r&c is not a console command!'
+  noItemBox: '&cThis is not a valid item box.'
+  noPlayerCommand: '&cThe command &o&v1&r&c is not a player command!'
+  coordsNotNumeric: '&4Coordinates must be numeric.'
+command:
+  give:
+    success: '&7You gave &o&v1x &v2&7 to &o&v3&7.'
+  main:
+    welcome: '&7Welcome to &4Items&fXL'
+    loaded: '&eItems loaded: &o[&v1] (custom) &e| &o[&v2] (vanilla)'
+    compatibility: '&eInternals: &o[&v1]'
+    help: '&7Type in &o/ixl help&r&7 for further information.'
+  open:
+    success: '&7You opened the box. You found the item &o&v1&7!'
+  reload:
+    success: '&7Successfully reloaded ItemsXL.'
+  serialize:
+    success: '&7Successfully serialized item. Have a look at the &oItemsXL/serialized.yml&r&7
+      file.'
+help:
+  give: '&7Give an item to a player. Usage: &o/ixl give [player=you] [id] ([amount=1])
+    (box)'
+  help: '&7Show command help. Usage: &o/ixl help [page]'
+  info: '&7Show information about an item. Usage: &o/ixl info [item]'
+  list: '&7List all custom items. Usage: &o/ixl list [page]'
+  main: '&7General status information.'
+  open: '&7Open the item box in your hand.'
+  reload: '&7Reload all configs and data. Usage: &o/ixl reload'
+  serialize: '&7Serialize the item stack in your hand. Usage: &o/ixl serialize ([bukkit|caliburn])'
+  summon: '&7Summons a mob. Usage: &o: /ixl summon [mob] ([world x y z yaw pitch])'
+object:
+  player: player
+  item: item
+  mob: mob
+  world: world

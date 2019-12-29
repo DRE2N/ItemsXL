@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel
+ * Copyright (C) 2015-2019 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ import de.erethon.caliburn.mob.CustomMob;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.commons.command.DRECommandCache;
 import de.erethon.commons.compatibility.Internals;
-import de.erethon.commons.config.MessageConfig;
 import de.erethon.commons.config.RawConfiguration;
 import de.erethon.commons.javaplugin.DREPlugin;
 import de.erethon.commons.javaplugin.DREPluginSettings;
@@ -64,7 +63,6 @@ public class ItemsXL extends DREPlugin {
 
         loadIConfig();
         loadAPI();
-        loadMessageConfig();
         loadICommandCache();
 
         manager.registerEvents(new ItemBoxListener(this), this);
@@ -81,18 +79,7 @@ public class ItemsXL extends DREPlugin {
      * load / reload a new instance of IConfig
      */
     public void loadIConfig() {
-        iConfig = new IConfig(new File(getDataFolder(), "config.yml"));
-    }
-
-    /**
-     * load / reload a new instance of MessageConfig
-     */
-    public void loadMessageConfig() {
-        File folder = new File(getDataFolder(), "languages");
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-        messageConfig = new MessageConfig(IMessage.class, new File(folder, iConfig.getLanguage() + ".yml"));
+        iConfig = new IConfig(this, new File(getDataFolder(), "config.yml"));
     }
 
     @Override
