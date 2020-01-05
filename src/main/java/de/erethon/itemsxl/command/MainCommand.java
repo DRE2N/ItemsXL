@@ -56,6 +56,7 @@ public class MainCommand extends DRECommand {
         MessageUtil.sendCenteredMessage(sender, "&4" + I[3] + T[3] + E[3] + M[3] + S[3] + "&f" + X[3] + L[3]);
         MessageUtil.sendCenteredMessage(sender, "&4" + I[4] + T[4] + E[4] + M[4] + S[4] + "&f" + X[4] + L[4]);
         MessageUtil.sendCenteredMessage(sender, "&b&l######## " + IMessage.COMMAND_MAIN_WELCOME.getMessage() + " &7v" + plugin.getDescription().getVersion() + " &b&l########");
+        MessageUtil.sendCenteredMessage(sender, "&b&o" + plugin.getDescription().getDescription());
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_LOADED.getMessage(String.valueOf(ci.size()), String.valueOf(vi.size())));
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_COMPATIBILITY.getMessage(CompatibilityHandler.getInstance().getInternals().toString()));
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_HELP.getMessage());
