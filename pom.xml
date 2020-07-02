@@ -31,7 +31,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.2.4</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -45,16 +45,6 @@
                                     <include>de.erethon:caliburn</include>
                                 </includes>
                             </artifactSet>
-                            <relocations>
-                                <relocation>
-                                    <pattern>de.erethon.commons</pattern>
-                                    <shadedPattern>de.erethon.itemsxl.util.commons</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>de.erethon.headlib</pattern>
-                                    <shadedPattern>de.erethon.itemsxl.util.headlib</shadedPattern>
-                                </relocation>
-                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -65,7 +55,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.15.1-R0.1-SNAPSHOT</version>
+            <version>1.16.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -77,7 +67,7 @@
         <dependency>
             <groupId>de.erethon.commons</groupId>
             <artifactId>commons-dist</artifactId>
-            <version>6.1</version>
+            <version>6.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

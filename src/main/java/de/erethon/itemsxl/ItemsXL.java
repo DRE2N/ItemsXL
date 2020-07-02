@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel
+ * Copyright (C) 2015-2020 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,13 +31,13 @@ import de.erethon.commons.javaplugin.DREPluginSettings;
 import de.erethon.commons.misc.FileUtil;
 import de.erethon.itemsxl.command.*;
 import de.erethon.itemsxl.config.IConfig;
-import de.erethon.itemsxl.config.IMessage;
 import de.erethon.itemsxl.item.ItemBoxListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map.Entry;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
  * @author Daniel Saukel
@@ -260,7 +260,7 @@ public class ItemsXL extends DREPlugin {
     public void loadLootTables() {
         File custom = new File(getDataFolder() + "/custom/loottables");
         custom.mkdirs();
-        FileUtil.getFilesForFolder(custom).forEach(f -> api.getLootTables().add(new LootTable(api, f)));
+        FileUtil.getFilesForFolder(custom).forEach(f -> api.getLootTables().add(new LootTable(YamlConfiguration.loadConfiguration(f).getValues(true))));
     }
 
 }

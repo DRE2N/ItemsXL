@@ -29,7 +29,7 @@ help:
   main: '&7General status information.'
   open: '&7Open the item box in your hand.'
   reload: '&7Reload all configs and data. Usage: &o/ixl reload'
-  serialize: '&7Serialize the item stack in your hand. Usage: &o/ixl serialize ([bukkit|caliburn])'
+  serialize: '&7Serialize the item stack in your hand. Usage: &o/ixl serialize ([simple])'
   summon: '&7Summons a mob. Usage: &o: /ixl summon [mob] ([world x y z yaw pitch])'
 object:
   player: player
