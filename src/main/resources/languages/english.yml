@@ -8,6 +8,9 @@ error:
 command:
   give:
     success: '&7You gave &o&v1x &v2&7 to &o&v3&7.'
+  lootTable:
+    deleted: '&7Successfully deleted loot table &o&v1&r&7.'
+    title: '&9Right-click an item to set its chance.'
   main:
     welcome: '&7Welcome to &4Items&fXL'
     loaded: '&eItems loaded: &o[&v1] (custom) &e| &o[&v2] (vanilla)'
@@ -26,6 +29,8 @@ help:
   help: '&7Show command help. Usage: &o/ixl help [page]'
   info: '&7Show information about an item. Usage: &o/ixl info [item]'
   list: '&7List all custom items. Usage: &o/ixl list [page]'
+  lootTable: '&7Creates a new or edits an existing loot table. Usage: &o/ixl lootTable
+    [name] ([-delete,d])'
   main: '&7General status information.'
   open: '&7Open the item box in your hand.'
   reload: '&7Reload all configs and data. Usage: &o/ixl reload'

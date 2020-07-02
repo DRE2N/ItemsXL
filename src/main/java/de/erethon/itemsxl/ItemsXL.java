@@ -23,6 +23,7 @@ import de.erethon.caliburn.item.VanillaItem;
 import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.CustomMob;
 import de.erethon.caliburn.mob.VanillaMob;
+import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.command.DRECommandCache;
 import de.erethon.commons.compatibility.Internals;
 import de.erethon.commons.config.RawConfiguration;
@@ -31,8 +32,8 @@ import de.erethon.commons.javaplugin.DREPluginSettings;
 import de.erethon.commons.misc.FileUtil;
 import de.erethon.itemsxl.command.*;
 import de.erethon.itemsxl.config.IConfig;
-import de.erethon.itemsxl.config.IMessage;
 import de.erethon.itemsxl.item.ItemBoxListener;
+import de.erethon.vignette.api.VignetteAPI;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -61,6 +62,7 @@ public class ItemsXL extends DREPlugin {
     public void onEnable() {
         super.onEnable();
 
+        VignetteAPI.init(this);
         loadIConfig();
         loadAPI();
         loadICommandCache();
@@ -97,6 +99,7 @@ public class ItemsXL extends DREPlugin {
                 new HelpCommand(this),
                 new GiveCommand(this),
                 new ListCommand(this),
+                new LootTableCommand(this),
                 new MainCommand(this),
                 new OpenCommand(this),
                 new ReloadCommand(this),
@@ -123,6 +126,7 @@ public class ItemsXL extends DREPlugin {
         loadMobs();
         loadItemCategories();
         loadMobCategories();
+        loadLootTables();
         api.finishInitialization();
     }
 
@@ -260,7 +264,25 @@ public class ItemsXL extends DREPlugin {
     public void loadLootTables() {
         File custom = new File(getDataFolder() + "/custom/loottables");
         custom.mkdirs();
-        FileUtil.getFilesForFolder(custom).forEach(f -> api.getLootTables().add(new LootTable(api, f)));
+        for (File file : FileUtil.getFilesForFolder(custom)) {
+            try {
+                RawConfiguration config = RawConfiguration.loadConfiguration(file);
+                String name = file.getName().replace(".yml", "");
+                api.getLootTables().add(((LootTable) config.get(name)).name(name));
+            } catch (Exception exception) {
+                MessageUtil.log(this, "Could not load loot table \"" + file.getName() + "\".");
+            }
+        }
+    }
+
+    /**
+     * Returns the file where the loot table is or would be saved in IXL.
+     *
+     * @param table the table
+     * @return the file where the loot table is or would be saved in IXL
+     */
+    public File getLootTableFile(LootTable table) {
+        return new File(getDataFolder() + "/custom/loottables", table.getName() + ".yml");
     }
 
 }
