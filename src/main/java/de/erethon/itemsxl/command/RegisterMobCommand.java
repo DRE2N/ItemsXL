@@ -19,6 +19,8 @@ package de.erethon.itemsxl.command;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.caliburn.mob.CustomMob;
+import de.erethon.caliburn.mob.ExMob;
+import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.command.DRECommand;
 import de.erethon.commons.misc.EnumUtil;
@@ -44,7 +46,7 @@ public class RegisterMobCommand extends DRECommand {
         setCommand("registerMob");
         setAliases("rm");
         setMinArgs(0);
-        setMaxArgs(1);
+        setMaxArgs(2);
         setHelp(IMessage.HELP_REGISTER_MOB.getMessage());
         setPermission("ixl.register");
         setPlayerCommand(true);
@@ -53,6 +55,11 @@ public class RegisterMobCommand extends DRECommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
+        ExMob exMob = api.getExMob(args[1]);
+        if (exMob instanceof VanillaMob) {
+            MessageUtil.sendMessage(sender, IMessage.ERROR_VANILLA_FEATURE.getMessage());
+            return;
+        }
         Player player = (Player) sender;
         List<Entity> nearby = player.getNearbyEntities(10.0, 10.0, 10.0);
         Entity next = null;
@@ -94,7 +101,16 @@ public class RegisterMobCommand extends DRECommand {
 
         CustomMob customMob = new CustomMob(api, idType, args[1], next);
         customMob.serialize().forEach((k, v) -> config.set(k, v));
-        MessageUtil.sendMessage(sender, IMessage.COMMAND_REGISTER_MOB_SUCCESS.getMessage());
+        if (exMob instanceof CustomMob) {
+            api.getExMobs().remove(exMob);
+        }
+        try {
+            config.save(file);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        customMob.register();
+        MessageUtil.sendMessage(sender, IMessage.COMMAND_REGISTER_MOB_SUCCESS.getMessage(args[1]));
     }
 
 }

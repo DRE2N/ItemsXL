@@ -19,6 +19,8 @@ package de.erethon.itemsxl.command;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.caliburn.item.CustomItem;
+import de.erethon.caliburn.item.ExItem;
+import de.erethon.caliburn.item.VanillaItem;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.command.DRECommand;
 import de.erethon.commons.compatibility.Version;
@@ -45,7 +47,7 @@ public class RegisterItemCommand extends DRECommand {
         setCommand("registerItem");
         setAliases("ri");
         setMinArgs(0);
-        setMaxArgs(1);
+        setMaxArgs(2);
         setHelp(IMessage.HELP_REGISTER_ITEM.getMessage());
         setPermission("ixl.register");
         setPlayerCommand(true);
@@ -54,6 +56,11 @@ public class RegisterItemCommand extends DRECommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
+        ExItem exItem = api.getExItem(args[1]);
+        if (exItem instanceof VanillaItem) {
+            MessageUtil.sendMessage(sender, IMessage.ERROR_VANILLA_FEATURE.getMessage());
+            return;
+        }
         Player player = (Player) sender;
         ItemStack itemStack;
         if (Version.isAtLeast(Version.MC1_9)) {
@@ -72,6 +79,8 @@ public class RegisterItemCommand extends DRECommand {
                 file.createNewFile();
             } catch (IOException exception) {
                 exception.printStackTrace();
+                MessageUtil.sendMessage(sender, IMessage.ERROR_IO.getMessage());
+                return;
             }
         }
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -81,12 +90,23 @@ public class RegisterItemCommand extends DRECommand {
             idType = EnumUtil.getEnumIgnoreCase(IdentifierType.class, args[2]);
             if (idType == null || idType == IdentifierType.METADATA || idType == IdentifierType.VANILLA) {
                 MessageUtil.sendMessage(sender, IMessage.ERROR_INVALID_ID_TYPE.getMessage(args[2]));
+                return;
             }
         }
 
         CustomItem customItem = new CustomItem(api, idType, args[1], itemStack);
         customItem.serialize().forEach((k, v) -> config.set(k, v));
-        MessageUtil.sendMessage(sender, IMessage.COMMAND_REGISTER_ITEM_SUCCESS.getMessage());
+        if (exItem instanceof CustomItem) {
+            api.getExItems().remove(exItem);
+        }
+        try {
+            config.save(file);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return;
+        }
+        customItem.register();
+        MessageUtil.sendMessage(sender, IMessage.COMMAND_REGISTER_ITEM_SUCCESS.getMessage(args[1]));
     }
 
 }

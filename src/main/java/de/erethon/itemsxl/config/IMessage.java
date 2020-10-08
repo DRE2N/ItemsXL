@@ -23,15 +23,17 @@ import de.erethon.commons.config.Message;
  */
 public enum IMessage implements Message {
 
+    ERROR_COORDS_NOT_NUMERIC("error.coordsNotNumeric"),
+    ERROR_INVALID_ID_TYPE("error.invalidIDType"),
+    ERROR_IO("error.io"),
     ERROR_NO_OBJECT("error.noObject"),
     ERROR_NO_PERMISSION("error.noPermission"),
     ERROR_NO_CONSOLE_COMMAND("error.noConsoleCommand"),
-    ERROR_INVALID_ID_TYPE("error.invalidIDType"),
     ERROR_NO_ITEM_BOX("error.noItemBox"),
     ERROR_NO_ITEM_IN_HAND("error.noItemInHand"),
     ERROR_NO_MOB_NEARBY("error.noMobNearby"),
     ERROR_NO_PLAYER_COMMAND("error.noPlayerCommand"),
-    ERROR_COORDS_NOT_NUMERIC("error.coordsNotNumeric"),
+    ERROR_VANILLA_FEATURE("error.vanillaFeature"),
     COMMAND_GIVE_SUCCESS("command.give.success"),
     COMMAND_MAIN_WELCOME("command.main.welcome"),
     COMMAND_MAIN_LOADED("command.main.loaded"),
