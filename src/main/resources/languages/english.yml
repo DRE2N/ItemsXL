@@ -1,8 +1,11 @@
 error:
+  invalidIDType: '&c&o&v1 &cis not a valid ID type.'
   noObject: '&cThis &v1 does not exist.'
   noPermission: '&cYou do not have permission to use the command &o&v1&r&c.'
   noConsoleCommand: '&cThe command &o&v1&r&c is not a console command!'
   noItemBox: '&cThis is not a valid item box.'
+  noItemInHand: '&cYou do not have an item in your main hand.'
+  noMobNearby: '&cThere is no mob nearby.'
   noPlayerCommand: '&cThe command &o&v1&r&c is not a player command!'
   coordsNotNumeric: '&4Coordinates must be numeric.'
 command:
@@ -15,6 +18,10 @@ command:
     help: '&7Type in &o/ixl help&r&7 for further information.'
   open:
     success: '&7You opened the box. You found the item &o&v1&7!'
+  registerItem:
+    success: '&7Successfully registered the item &o&v1&7.'
+  registerMob:
+    success: '&7Successfully registered the mob &o&v1&7.'
   reload:
     success: '&7Successfully reloaded ItemsXL.'
   serialize:
@@ -28,6 +35,8 @@ help:
   list: '&7List all custom items. Usage: &o/ixl list [page]'
   main: '&7General status information.'
   open: '&7Open the item box in your hand.'
+  registerItem: '&7Registers an item as a Caliburn item. Usage: &o/ixl ri [ID]'
+  registerMob: '&7Registers a mob as a Caliburn mob. Usage: &o/ixl rm [ID]'
   reload: '&7Reload all configs and data. Usage: &o/ixl reload'
   serialize: '&7Serialize the item stack in your hand. Usage: &o/ixl serialize ([simple])'
   summon: '&7Summons a mob. Usage: &o: /ixl summon [mob] ([world x y z yaw pitch])'

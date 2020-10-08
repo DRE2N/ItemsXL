@@ -17,27 +17,15 @@
 package de.erethon.itemsxl;
 
 import de.erethon.caliburn.CaliburnAPI;
-import de.erethon.caliburn.category.Category;
-import de.erethon.caliburn.item.CustomItem;
-import de.erethon.caliburn.item.VanillaItem;
-import de.erethon.caliburn.loottable.LootTable;
-import de.erethon.caliburn.mob.CustomMob;
-import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.commons.command.DRECommandCache;
 import de.erethon.commons.compatibility.Internals;
-import de.erethon.commons.config.RawConfiguration;
 import de.erethon.commons.javaplugin.DREPlugin;
 import de.erethon.commons.javaplugin.DREPluginSettings;
-import de.erethon.commons.misc.FileUtil;
 import de.erethon.itemsxl.command.*;
 import de.erethon.itemsxl.config.IConfig;
 import de.erethon.itemsxl.item.ItemBoxListener;
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map.Entry;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
  * @author Daniel Saukel
@@ -99,6 +87,8 @@ public class ItemsXL extends DREPlugin {
                 new ListCommand(this),
                 new MainCommand(this),
                 new OpenCommand(this),
+                new RegisterItemCommand(this),
+                new RegisterMobCommand(this),
                 new ReloadCommand(this),
                 new SerializeCommand(this),
                 new SummonCommand(this)
