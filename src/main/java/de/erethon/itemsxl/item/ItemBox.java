@@ -20,6 +20,7 @@ import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
 import de.erethon.commons.chat.MessageUtil;
+import de.erethon.commons.compatibility.Version;
 import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IConfig;
 import de.erethon.itemsxl.config.IMessage;
@@ -78,7 +79,12 @@ public class ItemBox {
      * @return the item in the box
      */
     public boolean open(Player player) {
-        ItemStack itemStack = player.getInventory().getItemInHand();
+        ItemStack itemStack;
+        if (Version.isAtLeast(Version.MC1_9)) {
+            itemStack = player.getInventory().getItemInMainHand();
+        } else {
+            itemStack = player.getInventory().getItemInHand();
+        }
         String name = itemStack.getItemMeta().getDisplayName();
 
         if (name.equals(config.getBoxName())) {

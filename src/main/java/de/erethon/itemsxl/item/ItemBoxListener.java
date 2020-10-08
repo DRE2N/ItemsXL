@@ -16,6 +16,7 @@
  */
 package de.erethon.itemsxl.item;
 
+import de.erethon.commons.compatibility.Version;
 import de.erethon.itemsxl.ItemsXL;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,7 +36,12 @@ public class ItemBoxListener implements Listener {
 
     @EventHandler
     public void onPlaceBlock(BlockPlaceEvent event) {
-        ItemStack itemStack = event.getPlayer().getInventory().getItemInMainHand();
+        ItemStack itemStack;
+        if (Version.isAtLeast(Version.MC1_9)) {
+            itemStack = event.getPlayer().getInventory().getItemInMainHand();
+        } else {
+            itemStack = event.getPlayer().getInventory().getItemInHand();
+        }
         ItemBox box = ItemBox.getByItemStack(plugin, itemStack);
 
         if (box != null) {
