@@ -24,6 +24,7 @@ import de.erethon.commons.javaplugin.DREPluginSettings;
 import de.erethon.itemsxl.command.*;
 import de.erethon.itemsxl.config.IConfig;
 import de.erethon.itemsxl.item.ItemBoxListener;
+import de.erethon.vignette.api.VignetteAPI;
 import java.io.File;
 import org.bukkit.ChatColor;
 
@@ -49,6 +50,7 @@ public class ItemsXL extends DREPlugin {
     public void onEnable() {
         super.onEnable();
 
+        VignetteAPI.init(this);
         loadIConfig();
         loadAPI();
         loadICommandCache();
@@ -85,6 +87,7 @@ public class ItemsXL extends DREPlugin {
                 new HelpCommand(this),
                 new GiveCommand(this),
                 new ListCommand(this),
+                new LootTableCommand(this),
                 new MainCommand(this),
                 new OpenCommand(this),
                 new RegisterItemCommand(this),
