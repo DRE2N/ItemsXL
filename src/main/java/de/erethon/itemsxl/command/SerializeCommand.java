@@ -24,6 +24,7 @@ import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IMessage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map.Entry;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -82,7 +83,10 @@ public class SerializeCommand extends DRECommand {
         }
 
         FileConfiguration config = new YamlConfiguration();
-        config.set("serialized", itemStack);
+        config.set("==", "org.bukkit.inventory.ItemStack");
+        for (Entry<String, Object> entry : itemStack.serialize().entrySet()) {
+            config.set(entry.getKey(), entry.getValue());
+        }
         try {
             config.save(file);
         } catch (IOException exception) {
