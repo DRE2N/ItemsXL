@@ -52,7 +52,6 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 public class LootTableCommand extends DRECommand {
 
-    private ItemsXL plugin;
     private CaliburnAPI api;
 
     private static final String LOOT_TABLE = "LOOT_TABLE";
@@ -120,7 +119,6 @@ public class LootTableCommand extends DRECommand {
     }
 
     public LootTableCommand(ItemsXL plugin) {
-        this.plugin = plugin;
         api = plugin.getAPI();
         setCommand("loottable");
         setAliases("lt");
@@ -172,7 +170,7 @@ public class LootTableCommand extends DRECommand {
         });
 
         gui.setCloseListener(e -> {
-            File file = plugin.getLootTableFile(table);
+            File file = getLootTableFile(table);
             if (e.getGUI().hasStatusModifier(SETTING_CHANCE)) {
                 return;
             } else if (table.getEntries().isEmpty()) {
@@ -194,8 +192,12 @@ public class LootTableCommand extends DRECommand {
         gui.open((Player) sender);
     }
 
+    private File getLootTableFile(LootTable table) {
+        return new File(api.getDataFolder() + "/custom/loottables", table.getName() + ".yml");
+    }
+
     private void delete(CommandSender sender, LootTable table) {
-        plugin.getLootTableFile(table).delete();
+        getLootTableFile(table).delete();
         api.getLootTables().remove(table);
         MessageUtil.sendMessage(sender, IMessage.COMMAND_LOOT_TABLE_DELETED.getMessage(table.getName()));
     }
