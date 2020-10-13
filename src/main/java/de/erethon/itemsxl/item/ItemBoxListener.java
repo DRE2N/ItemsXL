@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel
+ * Copyright (C) 2015-2020 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
  */
 package de.erethon.itemsxl.item;
 
+import de.erethon.commons.compatibility.Version;
 import de.erethon.itemsxl.ItemsXL;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,7 +36,12 @@ public class ItemBoxListener implements Listener {
 
     @EventHandler
     public void onPlaceBlock(BlockPlaceEvent event) {
-        ItemStack itemStack = event.getPlayer().getInventory().getItemInMainHand();
+        ItemStack itemStack;
+        if (Version.isAtLeast(Version.MC1_9)) {
+            itemStack = event.getPlayer().getInventory().getItemInMainHand();
+        } else {
+            itemStack = event.getPlayer().getInventory().getItemInHand();
+        }
         ItemBox box = ItemBox.getByItemStack(plugin, itemStack);
 
         if (box != null) {

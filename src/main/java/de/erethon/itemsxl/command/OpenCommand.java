@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel
+ * Copyright (C) 2015-2020 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ package de.erethon.itemsxl.command;
 import de.erethon.caliburn.item.VanillaItem;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.command.DRECommand;
+import de.erethon.commons.compatibility.Version;
 import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IMessage;
 import de.erethon.itemsxl.item.ItemBox;
@@ -47,7 +48,12 @@ public class OpenCommand extends DRECommand {
     public void onExecute(String[] args, CommandSender sender) {
         Player player = (Player) sender;
 
-        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        ItemStack itemStack;
+        if (Version.isAtLeast(Version.MC1_9)) {
+            itemStack = player.getInventory().getItemInMainHand();
+        } else {
+            itemStack = player.getInventory().getItemInHand();
+        }
 
         if (itemStack.getType() != VanillaItem.PLAYER_HEAD.getMaterial()) {
             MessageUtil.sendMessage(sender, IMessage.ERROR_NO_ITEM_BOX.getMessage());
