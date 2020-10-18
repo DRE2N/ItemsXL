@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel
+ * Copyright (C) 2015-2020 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,29 +17,15 @@
 package de.erethon.itemsxl;
 
 import de.erethon.caliburn.CaliburnAPI;
-import de.erethon.caliburn.category.Category;
-import de.erethon.caliburn.item.CustomItem;
-import de.erethon.caliburn.item.ExItem;
-import de.erethon.caliburn.item.VanillaItem;
-import de.erethon.caliburn.loottable.LootTable;
-import de.erethon.caliburn.mob.CustomMob;
-import de.erethon.caliburn.mob.ExMob;
-import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.commons.command.DRECommandCache;
 import de.erethon.commons.compatibility.Internals;
-import de.erethon.commons.config.MessageConfig;
-import de.erethon.commons.config.RawConfiguration;
 import de.erethon.commons.javaplugin.DREPlugin;
 import de.erethon.commons.javaplugin.DREPluginSettings;
-import de.erethon.commons.misc.FileUtil;
 import de.erethon.itemsxl.command.*;
 import de.erethon.itemsxl.config.IConfig;
-import de.erethon.itemsxl.config.IMessage;
 import de.erethon.itemsxl.item.ItemBoxListener;
+import de.erethon.vignette.api.VignetteAPI;
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map.Entry;
 import org.bukkit.ChatColor;
 
 /**
@@ -64,9 +50,9 @@ public class ItemsXL extends DREPlugin {
     public void onEnable() {
         super.onEnable();
 
+        VignetteAPI.init(this);
         loadIConfig();
         loadAPI();
-        loadMessageConfig();
         loadICommandCache();
 
         manager.registerEvents(new ItemBoxListener(this), this);
@@ -83,18 +69,7 @@ public class ItemsXL extends DREPlugin {
      * load / reload a new instance of IConfig
      */
     public void loadIConfig() {
-        iConfig = new IConfig(new File(getDataFolder(), "config.yml"));
-    }
-
-    /**
-     * load / reload a new instance of MessageConfig
-     */
-    public void loadMessageConfig() {
-        File folder = new File(getDataFolder(), "languages");
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-        messageConfig = new MessageConfig(IMessage.class, new File(folder, iConfig.getLanguage() + ".yml"));
+        iConfig = new IConfig(this, new File(getDataFolder(), "config.yml"));
     }
 
     @Override
@@ -112,8 +87,11 @@ public class ItemsXL extends DREPlugin {
                 new HelpCommand(this),
                 new GiveCommand(this),
                 new ListCommand(this),
+                new LootTableCommand(this),
                 new MainCommand(this),
                 new OpenCommand(this),
+                new RegisterItemCommand(this),
+                new RegisterMobCommand(this),
                 new ReloadCommand(this),
                 new SerializeCommand(this),
                 new SummonCommand(this)
@@ -134,148 +112,8 @@ public class ItemsXL extends DREPlugin {
      */
     public void loadAPI() {
         api = new CaliburnAPI(this, ChatColor.translateAlternateColorCodes('&', iConfig.getIdentifierPrefix()));
-        loadItems();
-        loadMobs();
-        loadItemCategories();
-        loadMobCategories();
+        api.loadDataFiles();
         api.finishInitialization();
-    }
-
-    /**
-     * load / reload item categories
-     */
-    public void loadItemCategories() {
-        File file = new File(getDataFolder(), "ItemCategories.yml");
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-        }
-
-        RawConfiguration config = RawConfiguration.loadConfiguration(file);
-        for (Object entry : config.getArgs().entrySet()) {
-            api.getItemCategories().add(new Category<>(api, ((Entry) entry).getKey().toString(), (List<String>) ((Entry) entry).getValue()));
-        }
-    }
-
-    /**
-     * load / reload mob categories
-     */
-    public void loadMobCategories() {
-        File file = new File(getDataFolder(), "MobCategories.yml");
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-        }
-
-        RawConfiguration config = RawConfiguration.loadConfiguration(file);
-        for (Object entry : config.getArgs().entrySet()) {
-            api.getItemCategories().add(new Category<>(api, ((Entry) entry).getKey().toString(), (List<String>) ((Entry) entry).getValue()));
-        }
-    }
-
-    /**
-     * load / reload items
-     */
-    public void loadItems() {
-        File custom = new File(getDataFolder() + "/custom/items");
-        custom.mkdirs();
-
-        for (File file : FileUtil.getFilesForFolder(custom)) {
-            RawConfiguration config = RawConfiguration.loadConfiguration(file);
-            ExItem item = ExItem.deserialize(config.getArgs());
-            String id = file.getName().substring(0, file.getName().length() - 4);
-            ((CustomItem) item).register(id);
-        }
-
-        File vanilla = new File(getDataFolder() + "/vanilla/items");
-        if (!vanilla.exists()) {
-            vanilla.mkdirs();
-        }
-
-        for (VanillaItem item : VanillaItem.getLoaded()) {
-            File file = new File(vanilla, item.getId() + ".yml");
-            RawConfiguration config;
-            if (!file.exists()) {
-                try {
-                    file.createNewFile();
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-
-                config = RawConfiguration.loadConfiguration(file);
-                config.createSection("categoryDamageModifiers");
-                config.createSection("mobDamageModifiers");
-                try {
-                    config.save(file);
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-
-            } else {
-                config = RawConfiguration.loadConfiguration(file);
-            }
-
-            item.setRaw(config.getArgs());
-        }
-    }
-
-    /**
-     * load / reload mobs
-     */
-    public void loadMobs() {
-        File custom = new File(getDataFolder() + "/custom/mobs");
-        custom.mkdirs();
-
-        for (File file : FileUtil.getFilesForFolder(custom)) {
-            RawConfiguration config = RawConfiguration.loadConfiguration(file);
-            ExMob mob = ExMob.deserialize(config.getArgs());
-            String id = file.getName().substring(0, file.getName().length() - 4);
-            ((CustomMob) mob).register(id);
-        }
-
-        File vanilla = new File(getDataFolder() + "/vanilla/mobs");
-        vanilla.mkdirs();
-
-        for (VanillaMob mob : VanillaMob.getLoaded()) {
-            File file = new File(vanilla, mob.getId() + ".yml");
-            RawConfiguration config;
-            if (!file.exists()) {
-                try {
-                    file.createNewFile();
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-
-                config = RawConfiguration.loadConfiguration(file);
-                config.createSection("categoryDamageModifiers");
-                config.createSection("itemDamageModifiers");
-                try {
-                    config.save(file);
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-
-            } else {
-                config = RawConfiguration.loadConfiguration(file);
-            }
-
-            mob.setRaw(config.getArgs());
-        }
-    }
-
-    /**
-     * load / reload loot tables
-     */
-    public void loadLootTables() {
-        File custom = new File(getDataFolder() + "/custom/loottables");
-        custom.mkdirs();
-        FileUtil.getFilesForFolder(custom).forEach(f -> api.getLootTables().add(new LootTable(api, f)));
     }
 
 }

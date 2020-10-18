@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel
+ * Copyright (C) 2015-2020 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ import de.erethon.commons.command.DRECommand;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IMessage;
-import java.util.List;
+import java.util.Collection;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -49,11 +49,11 @@ public class ReloadCommand extends DRECommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        List<CustomItem> ci = api.getExItems(CustomItem.class);
-        List<VanillaItem> vi = api.getExItems(VanillaItem.class);
+        Collection<CustomItem> ci = api.getCustomItems();
+        Collection<VanillaItem> vi = VanillaItem.getLoaded();
 
+        plugin.reloadMessageHandler();
         plugin.loadIConfig();
-        plugin.loadMessageConfig();
         plugin.loadICommandCache();
         plugin.loadAPI();
 

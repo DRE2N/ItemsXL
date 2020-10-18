@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel
+ * Copyright (C) 2015-2020 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ import de.erethon.commons.command.DRECommand;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IMessage;
-import java.util.List;
+import java.util.Collection;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -47,8 +47,8 @@ public class MainCommand extends DRECommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        List<CustomItem> ci = api.getExItems(CustomItem.class);
-        List<VanillaItem> vi = api.getExItems(VanillaItem.class);
+        Collection<CustomItem> ci = api.getCustomItems();
+        Collection<VanillaItem> vi = VanillaItem.getLoaded();
 
         MessageUtil.sendCenteredMessage(sender, "&4" + I[0] + T[0] + E[0] + M[0] + S[0] + "&f" + X[0] + L[0]);
         MessageUtil.sendCenteredMessage(sender, "&4" + I[1] + T[1] + E[1] + M[1] + S[1] + "&f" + X[1] + L[1]);
@@ -56,10 +56,11 @@ public class MainCommand extends DRECommand {
         MessageUtil.sendCenteredMessage(sender, "&4" + I[3] + T[3] + E[3] + M[3] + S[3] + "&f" + X[3] + L[3]);
         MessageUtil.sendCenteredMessage(sender, "&4" + I[4] + T[4] + E[4] + M[4] + S[4] + "&f" + X[4] + L[4]);
         MessageUtil.sendCenteredMessage(sender, "&b&l######## " + IMessage.COMMAND_MAIN_WELCOME.getMessage() + " &7v" + plugin.getDescription().getVersion() + " &b&l########");
+        MessageUtil.sendCenteredMessage(sender, "&b&o" + plugin.getDescription().getDescription());
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_LOADED.getMessage(String.valueOf(ci.size()), String.valueOf(vi.size())));
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_COMPATIBILITY.getMessage(CompatibilityHandler.getInstance().getInternals().toString()));
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_HELP.getMessage());
-        MessageUtil.sendCenteredMessage(sender, "&7\u00a92015-2018 Daniel Saukel; licensed under GPLv3.");
+        MessageUtil.sendCenteredMessage(sender, "&7\u00a92015-2020 Daniel Saukel; licensed under GPLv3.");
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel
+ * Copyright (C) 2015-2020 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 package de.erethon.itemsxl.config;
 
 import de.erethon.commons.config.DREConfig;
+import de.erethon.commons.javaplugin.DREPlugin;
 import java.io.File;
 import org.bukkit.ChatColor;
 
@@ -24,6 +25,8 @@ import org.bukkit.ChatColor;
  * @author Daniel Saukel
  */
 public class IConfig extends DREConfig {
+
+    private DREPlugin plugin;
 
     public static final int CONFIG_VERSION = 1;
 
@@ -33,8 +36,9 @@ public class IConfig extends DREConfig {
     private String boxName = "&6Mysterious Box";
     private String advancedWorkbenchName = "&6Advanced Workbench";
 
-    public IConfig(File file) {
+    public IConfig(DREPlugin plugin, File file) {
         super(file, CONFIG_VERSION);
+        this.plugin = plugin;
 
         if (initialize) {
             initialize();
@@ -101,6 +105,7 @@ public class IConfig extends DREConfig {
     @Override
     public void load() {
         language = config.getString("language", language);
+        plugin.getMessageHandler().setDefaultLanguage(language);
         builtInItems = config.getBoolean("builtInItems", builtInItems);
         identifierPrefix = config.getString("identifierPrefix", identifierPrefix);
         boxName = config.getString("boxName", boxName);

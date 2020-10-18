@@ -1,0 +1,53 @@
+command:
+  give:
+    success: "&7You gave &o&v1x &v2&7 to &o&v3&7."
+  lootTable:
+    deleted: "&7Successfully deleted loot table &o&v1&r&7."
+    saved: "&7Successfully saved loot table &o&v1&7."
+    title: "&9Right-click an item to set its chance."
+  main:
+    compatibility: "&eInternals: &o[&v1]"
+    help: "&7Type in &o/ixl help&r&7 for further information."
+    loaded: "&eItems loaded: &o[&v1] (custom) &e| &o[&v2] (vanilla)"
+    welcome: "&7Welcome to &4Items&fXL"
+  open:
+    success: "&7You opened the box. You found the item &o&v1&7!"
+  registerItem:
+    success: "&7Successfully registered the item &o&v1&7."
+  registerMob:
+    success: "&7Successfully registered the mob &o&v1&7."
+  reload:
+    success: "&7Successfully reloaded ItemsXL."
+  serialize:
+    success: "&7Successfully serialized item. Have a look at the &oItemsXL/serialized.yml&r&7 file."
+error:
+  coordsNotNumeric: "&cCoordinates must be numeric."
+  invalidIDType: "&c&o&v1 &cis not a valid ID type."
+  io: "An I/O error occurred."
+  noConsoleCommand: "&cThe command &o&v1&r&c is not a console command!"
+  noItemBox: "&cThis is not a valid item box."
+  noItemInHand: "&cYou do not have an item in your main hand."
+  noMobNearby: "&cThere is no mob nearby."
+  noObject: "&cThis &v1 does not exist."
+  noPermission: "&cYou do not have permission to use the command &o&v1&r&c."
+  noPlayerCommand: "&cThe command &o&v1&r&c is not a player command!"
+  vanillaFeature: "&cYou cannot override Vanilla features."
+help:
+  give: "&7Give an item to a player. Usage: &o/ixl give [player=you] [id] ([amount=1]) (box)"
+  help: "&7Show command help. Usage: &o/ixl help [page]"
+  info: "&7Show information about an item. Usage: &o/ixl info [item]"
+  list: "&7List all custom items. Usage: &o/ixl list [page]"
+  lootTable: "&7Creates a new or edits an existing loot table. Usage: &o/ixl lootTable [name] ([-delete,d])"
+  main: "&7General status information."
+  open: "&7Open the item box in your hand."
+  registerItem: "&7Registers an item as a Caliburn item. Usage: &o/ixl ri [ID] [ID Type]"
+  registerMob: "&7Registers a mob as a Caliburn mob. Usage: &o/ixl rm [ID] [ID Type]"
+  reload: "&7Reload all configs and data. Usage: &o/ixl reload"
+  serialize: "&7Serialize the item stack in your hand. Usage: &o/ixl serialize ([simple])"
+  summon: "&7Summons a mob. Usage: &o: /ixl summon [mob] ([world x y z yaw pitch])"
+object:
+  item: item
+  lootTable: "loot table"
+  mob: mob
+  player: player
+  world: world

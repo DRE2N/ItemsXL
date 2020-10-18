@@ -1,8 +1,8 @@
-name: ${project.name}
-main: ${project.groupId}.${project.artifactId}.${project.name}
+name: ItemsXL
+main: de.erethon.itemsxl.ItemsXL
 version: ${project.version}${buildNo}
 author: Daniel Saukel
-description: ${project.description}
+description: "Implementation of Caliburn v${apiVersion}."
 website: ${project.url}
 commands:
   itemsxl:

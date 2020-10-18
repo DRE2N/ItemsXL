@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel
+ * Copyright (C) 2015-2020 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,12 @@ package de.erethon.itemsxl.command;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.command.DRECommand;
+import de.erethon.commons.compatibility.Version;
 import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IMessage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map.Entry;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -58,15 +60,20 @@ public class SerializeCommand extends DRECommand {
             type = args[1];
         }
 
-        ItemStack item = player.getInventory().getItemInHand();
-        Object serialized = item;
+        ItemStack itemStack;
+        if (Version.isAtLeast(Version.MC1_9)) {
+            itemStack = player.getInventory().getItemInMainHand();
+        } else {
+            itemStack = player.getInventory().getItemInHand();
+        }
+        Object serialized = itemStack;
 
         if (type.equalsIgnoreCase("simple")) {
-            serialized = api.getSimpleSerialization().serialize(item);
+            serialized = api.getSimpleSerialization().serialize(itemStack);
             MessageUtil.sendMessage(sender, (String) serialized);
         }
 
-        File file = new File(ItemsXL.getInstance().getDataFolder(), "serialized.yml");
+        File file = new File(plugin.getDataFolder(), "serialized.yml");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -76,7 +83,10 @@ public class SerializeCommand extends DRECommand {
         }
 
         FileConfiguration config = new YamlConfiguration();
-        config.set("serialized", item);
+        config.set("==", "org.bukkit.inventory.ItemStack");
+        for (Entry<String, Object> entry : itemStack.serialize().entrySet()) {
+            config.set(entry.getKey(), entry.getValue());
+        }
         try {
             config.save(file);
         } catch (IOException exception) {
