@@ -36,6 +36,7 @@ public enum IMessage implements Message {
     ERROR_VANILLA_FEATURE("error.vanillaFeature"),
     COMMAND_GIVE_SUCCESS("command.give.success"),
     COMMAND_LOOT_TABLE_DELETED("command.lootTable.deleted"),
+    COMMAND_LOOT_TABLE_SAVED("command.lootTable.saved"),
     COMMAND_LOOT_TABLE_TITLE("command.lootTable.title"),
     COMMAND_MAIN_WELCOME("command.main.welcome"),
     COMMAND_MAIN_LOADED("command.main.loaded"),
@@ -60,6 +61,7 @@ public enum IMessage implements Message {
     HELP_SUMMON("help.summon"),
     OBJECT_PLAYER("object.player"),
     OBJECT_ITEM("object.item"),
+    OBJECT_LOOT_TABLE("object.lootTable"),
     OBJECT_MOB("object.mob"),
     OBJECT_WORLD("object.world");
 

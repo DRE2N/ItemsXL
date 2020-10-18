@@ -20,6 +20,7 @@ import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.category.Categorizable;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
+import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.command.DRECommand;
@@ -65,6 +66,8 @@ public class ListCommand extends DRECommand {
                 objects = VanillaMob.getLoaded();
             } else if (args[1].equalsIgnoreCase("m")) {
                 objects = api.getExMobs();
+            } else if (args[1].equalsIgnoreCase("lt")) {
+                objects = api.getLootTables();
             } else {
                 objects = api.getExItems();
             }
@@ -81,7 +84,7 @@ public class ListCommand extends DRECommand {
         int max = 0;
         int min = 0;
         for (Object object : objects) {
-            if (sender.hasPermission("ixl.list." + ((Categorizable) object).getId())) {
+            if (sender.hasPermission("ixl.list." + getId(object))) {
                 send++;
                 if (send >= page * 5 - 4 && send <= page * 5) {
                     min = page * 5 - 4;
@@ -93,8 +96,18 @@ public class ListCommand extends DRECommand {
 
         MessageUtil.sendPluginTag(sender, ItemsXL.getInstance());
         MessageUtil.sendCenteredMessage(sender, "&4&l[ &6" + min + "-" + max + " &4/&6 " + send + " &4|&6 " + page + " &4&l]");
-        toSend.forEach(o -> MessageUtil.sendMessage(sender, "&b" + ((Categorizable) o).getId() + "&7 | &e" + o.getClass().getSimpleName()
+        toSend.forEach(o -> MessageUtil.sendMessage(sender, "&b" + getId(o) + "&7 | &e" + o.getClass().getSimpleName()
                 + ((o instanceof ExItem) ? "&7 | &e" + ((ExItem) o).getMaterial() : "")));
+    }
+
+    private String getId(Object object) {
+        if (object instanceof Categorizable) {
+            return ((Categorizable) object).getId();
+        } else if (object instanceof LootTable) {
+            return ((LootTable) object).getName();
+        } else {
+            return "";
+        }
     }
 
 }

@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -135,7 +136,7 @@ public class LootTableCommand extends DRECommand {
         String name = args[1].replace("/", "");
         LootTable table = api.getLootTable(name) != null ? api.getLootTable(name) : new LootTable(api, name);
         if (args.length == 3 && args[2].toUpperCase().startsWith("-D")) {
-            delete(sender, table);
+            deleteIfExists(sender, table);
             return;
         }
 
@@ -154,37 +155,32 @@ public class LootTableCommand extends DRECommand {
             if (button != null) {
                 Entry entry = table.new Entry(String.valueOf(e.getSlot()), e.getItemStack(), 100.0);
                 table.addEntry(entry);
-                button.setStealable(true);
+                button.setLeftClickLocked(false);
                 button.setInteractionListener(getEntryClickListener(layout.getGUI()));
                 button.addStatusModifier(new StatusModifier<>(TABLE_ENTRY, entry));
                 addButton(layout, entry);
-                gui.open(e.getPlayer());
             } else {
                 button = (InventoryButton) layout.getComponent(e.getSlot());
                 gui.remove(button);
-                e.getGUI().remove(button);
                 Entry entry = table.getEntry(String.valueOf(e.getSlot()));
                 table.removeEntry(entry);
-                gui.open(e.getPlayer());
             }
         });
 
         gui.setCloseListener(e -> {
-            File file = getLootTableFile(table);
             if (e.getGUI().hasStatusModifier(SETTING_CHANCE)) {
                 return;
-            } else if (table.getEntries().isEmpty()) {
-                if (file.exists()) {
-                    delete(sender, table);
-                }
-                return;
             }
-            FileConfiguration config = new YamlConfiguration();
-            config.set(name, table);
-            try {
-                config.save(file);
-            } catch (IOException exception) {
-                exception.printStackTrace();
+            boolean empty = true;
+            for (Entry entry : table.getEntries()) {
+                if (entry != null && entry.getLootItem().getType() != Material.AIR) {
+                    empty = false;
+                }
+            }
+            if (empty) {
+                deleteIfExists(sender, table);
+            } else {
+                save(sender, table);
             }
         });
 
@@ -196,15 +192,31 @@ public class LootTableCommand extends DRECommand {
         return new File(api.getDataFolder() + "/custom/loottables", table.getName() + ".yml");
     }
 
-    private void delete(CommandSender sender, LootTable table) {
-        getLootTableFile(table).delete();
+    private void deleteIfExists(CommandSender sender, LootTable table) {
         api.getLootTables().remove(table);
+        File file = getLootTableFile(table);
+        if (!file.exists()) {
+            MessageUtil.sendMessage(sender, IMessage.ERROR_NO_OBJECT.getMessage(IMessage.OBJECT_LOOT_TABLE.getMessage()));
+            return;
+        }
+        file.delete();
         MessageUtil.sendMessage(sender, IMessage.COMMAND_LOOT_TABLE_DELETED.getMessage(table.getName()));
     }
 
-    private static void addButton(PaginatedFlowInventoryLayout layout, Entry entry) {
+    private void save(CommandSender sender, LootTable table) {
+        FileConfiguration config = new YamlConfiguration();
+        table.serialize().entrySet().forEach(e -> config.set(e.getKey(), e.getValue()));
+        try {
+            config.save(getLootTableFile(table));
+            MessageUtil.sendMessage(sender, IMessage.COMMAND_LOOT_TABLE_SAVED.getMessage(table.getName()));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private void addButton(PaginatedFlowInventoryLayout layout, Entry entry) {
         InventoryButton button = new InventoryButton(entry.getLootItem());
-        button.setStealable(true);
+        button.setLeftClickLocked(false);
         button.setInteractionListener(getEntryClickListener(layout.getGUI()));
         button.addStatusModifier(new StatusModifier<>(TABLE_ENTRY, entry));
         int id = NumberUtil.parseInt(entry.getId(), Integer.MIN_VALUE);
@@ -215,7 +227,7 @@ public class LootTableCommand extends DRECommand {
         }
     }
 
-    private static InteractionListener getEntryClickListener(GUI gui) {
+    private InteractionListener getEntryClickListener(GUI gui) {
         return e -> {
             if (e.getAction() != Action.RIGHT_CLICK) {
                 return;
@@ -223,7 +235,7 @@ public class LootTableCommand extends DRECommand {
             e.getGUI().addStatusModifier(new StatusModifier(SETTING_CHANCE));
             Entry entry = (Entry) e.getButton().getStatusModifier(TABLE_ENTRY).getValue();
             SET_NUMBER_GUI.setTitle(writeChance(new BigDecimal(entry.getLootChance())));
-            GUI snGUI = SET_NUMBER_GUI.open(e.getPlayer());
+            GUI snGUI = SET_NUMBER_GUI.copy().open(e.getPlayer());
             snGUI.addStatusModifier(new StatusModifier<>(LAST_GUI, gui));
             snGUI.addStatusModifier(new StatusModifier<>(TABLE_ENTRY, entry));
             snGUI.addStatusModifier(new StatusModifier<>(CURRENT_NUMBER, new BigDecimal(entry.getLootChance()).setScale(2, RoundingMode.HALF_UP)));
