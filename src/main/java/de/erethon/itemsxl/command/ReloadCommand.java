@@ -55,7 +55,7 @@ public class ReloadCommand extends DRECommand {
         plugin.reloadMessageHandler();
         plugin.loadIConfig();
         plugin.loadICommandCache();
-        plugin.loadAPI();
+        plugin.getAPI().reload();
 
         MessageUtil.sendPluginTag(sender, plugin);
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_RELOAD_SUCCESS.getMessage());
