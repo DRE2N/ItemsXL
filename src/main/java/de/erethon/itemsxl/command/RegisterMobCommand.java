@@ -45,7 +45,7 @@ public class RegisterMobCommand extends DRECommand {
         api = plugin.getAPI();
         setCommand("registerMob");
         setAliases("rm");
-        setMinArgs(0);
+        setMinArgs(1);
         setMaxArgs(2);
         setHelp(IMessage.HELP_REGISTER_MOB.getMessage());
         setPermission("ixl.register");

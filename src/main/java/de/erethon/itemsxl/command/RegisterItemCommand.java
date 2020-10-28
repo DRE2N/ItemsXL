@@ -46,7 +46,7 @@ public class RegisterItemCommand extends DRECommand {
         api = plugin.getAPI();
         setCommand("registerItem");
         setAliases("ri");
-        setMinArgs(0);
+        setMinArgs(1);
         setMaxArgs(2);
         setHelp(IMessage.HELP_REGISTER_ITEM.getMessage());
         setPermission("ixl.register");
