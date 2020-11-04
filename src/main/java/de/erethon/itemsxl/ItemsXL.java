@@ -42,6 +42,7 @@ public class ItemsXL extends DREPlugin {
         settings = DREPluginSettings.builder()
                 .internals(Internals.andHigher(Internals.v1_8_R1))
                 .metrics(true)
+                .bStatsResourceId(1041)
                 .spigotMCResourceId(14472)
                 .build();
     }
