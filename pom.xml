@@ -2,14 +2,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon</groupId>
     <artifactId>itemsxl</artifactId>
-    <version>0.6.5</version>
+    <version>0.6.6</version>
     <packaging>jar</packaging>
     <name>ItemsXL</name>
     <url>https://dre2n.github.io</url>
     <description>A plugin to create and (de-) serialize custom items and mobs.</description>
     <properties>
         <buildNo></buildNo>
-        <apiVersion>1.0-RC-05</apiVersion>
+        <apiVersion>1.0-RC-06</apiVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.4-R0.1-SNAPSHOT</version>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
