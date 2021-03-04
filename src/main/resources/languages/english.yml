@@ -20,6 +20,8 @@ command:
     success: "&7Successfully reloaded ItemsXL."
   serialize:
     success: "&7Successfully serialized item. Have a look at the &oItemsXL/serialized.yml&r&7 file."
+  unregisterRecipe:
+    success: "&7Successfully unregistered and removed recipe."
 error:
   coordsNotNumeric: "&cCoordinates must be numeric."
   invalidIDType: "&c&o&v1 &cis not a valid ID type."
@@ -32,6 +34,7 @@ error:
   noPermission: "&cYou do not have permission to use the command &o&v1&r&c."
   noPlayerCommand: "&cThe command &o&v1&r&c is not a player command!"
   vanillaFeature: "&cYou cannot override Vanilla features."
+  recipeNotFound: "&cThe recipe '&v1' does not exist"
 help:
   give: "&7Give an item to a player. Usage: &o/ixl give [player=you] [id] ([amount=1]) (box)"
   help: "&7Show command help. Usage: &o/ixl help [page]"
@@ -46,6 +49,7 @@ help:
   reload: "&7Reload all configs and data. Usage: &o/ixl reload"
   serialize: "&7Serialize the item stack in your hand. Usage: &o/ixl serialize ([simple])"
   summon: "&7Summons a mob. Usage: &o: /ixl summon [mob] ([world x y z yaw pitch])"
+  unregisterRecipe: "&7Unregister and remove an recipe. Usage: &o/ixl unregisterRecipe [recipe]"
 object:
   item: item
   lootTable: "loot table"

@@ -39,7 +39,8 @@ public class ICommandCache extends DRECommandCache implements TabCompleter {
                 new ReloadCommand(plugin),
                 new SerializeCommand(plugin),
                 new SummonCommand(plugin),
-                new RecipeEditorCommand(plugin)
+                new RecipeEditorCommand(plugin),
+                new UnregisterRecipeCommand(plugin)
         );
         this.api = plugin.getAPI();
     }
@@ -67,7 +68,8 @@ public class ICommandCache extends DRECommandCache implements TabCompleter {
             }
         } else {
             if (args.length == 2) {
-                if (cmd.equalsIgnoreCase("editor")) {
+                if (cmd.equalsIgnoreCase("editor") || cmd.equalsIgnoreCase("recipeEditor") || cmd.equalsIgnoreCase("re")
+                        || cmd.equalsIgnoreCase("unregisterRecipe") || cmd.equalsIgnoreCase("ur")) {
                     for (CustomRecipe recipe : api.getRecipes()) {
                         if (recipe.getId().toLowerCase().startsWith(args[1].toLowerCase())) {
                             completes.add(recipe.getId());

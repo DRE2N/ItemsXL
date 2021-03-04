@@ -19,7 +19,7 @@ public class RecipeEditorCommand extends DRECommand {
     public RecipeEditorCommand(ItemsXL plugin) {
         api = plugin.getAPI();
         setCommand("recipeEditor");
-        setAliases("re", "recipe", "editor");
+        setAliases("re", "editor");
         setMinArgs(1);
         setMaxArgs(1);
         setHelp(IMessage.HELP_RECIPE_EDITOR.getMessage());
