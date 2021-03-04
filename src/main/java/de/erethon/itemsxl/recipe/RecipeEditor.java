@@ -80,7 +80,7 @@ public class RecipeEditor implements Listener {
 
     private static void specifyMeta(ItemStack item, NamespacedKey key, String name, boolean hideAttr) {
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(name);
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         if (hideAttr) {
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -100,7 +100,7 @@ public class RecipeEditor implements Listener {
     }
 
     private static void openInv(Player player, String name, CustomRecipe existing) {
-        Inventory inv = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('&', "&8[&6Recipe Editor&8] &7" + name));
+        Inventory inv = Bukkit.createInventory(null, 27, IMessage.RECIPE_RECIPE_EDITOR.getMessage(name));
 
         for (int i = 0; i < 27; i++) {
             if (!Util.contains(RECIPE_FIELD_INDEXES, i) && !Util.contains(NON_GLASS_INDEXES, i)) {
@@ -263,14 +263,14 @@ public class RecipeEditor implements Listener {
             CustomShapedRecipe recipe = new CustomShapedRecipe(ItemsXL.key(id), recipeResult, RecipeUtil.toShape(shape), ingredients);
 
             if (session.isExisting()) {
-                api.removeRecipe(session.getExisting());
+                api.unregisterRecipe(session.getExisting());
                 api.deleteRecipe(session.getExisting());
             }
             if (session.isExisting()) {
                 api.deleteRecipe(session.getExisting());
             }
             plugin.saveRecipe(recipesFile, id, recipe);
-            api.addRecipe(recipe);
+            api.registerRecipe(recipe);
         } else {
             Map<RecipeIngredient, Integer> ingredients = new HashMap<>();
 
@@ -301,7 +301,7 @@ public class RecipeEditor implements Listener {
                 api.deleteRecipe(session.getExisting());
             }
             plugin.saveRecipe(recipesFile, id, recipe);
-            api.addRecipe(recipe);
+            api.registerRecipe(recipe);
         }
     }
 

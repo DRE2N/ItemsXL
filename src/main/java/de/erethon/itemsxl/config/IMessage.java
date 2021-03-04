@@ -68,9 +68,14 @@ public enum IMessage implements Message {
     EDITOR_SHAPED_RECIPE("editor.shapedRecipe"),
     EDITOR_SHAPELESS_RECIPE("editor.shapelessRecipe"),
     EDITOR_ADD_RECIPE("editor.addRecipe"),
-    EDITOR_MISSING_RESULT("editor.missingResult");
+    EDITOR_MISSING_RESULT("editor.missingResult"),
+    RECIPE_RESULT("recipe.result"),
+    RECIPE_AMOUNT("recipe.amount"),
+    RECIPE_SHAPE("recipe.shape"),
+    RECIPE_INGREDIENTS("recipe.ingredients"),
+    RECIPE_RECIPE_EDITOR("recipe.editor");
 
-    private String path;
+    private final String path;
 
     IMessage(String path) {
         this.path = path;

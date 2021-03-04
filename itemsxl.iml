@@ -26,7 +26,7 @@
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.md-5:bungeecord-chat:1.16-R0.4" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.27" level="project" />
-    <orderEntry type="library" name="Maven: de.erethon:caliburn:1.0-RC-07" level="project" />
+    <orderEntry type="library" name="Maven: de.erethon:caliburn:1.0-RC-08" level="project" />
     <orderEntry type="library" name="Maven: de.erethon.commons:commons-dist:6.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.bstats:bstats-bukkit:1.7" level="project" />
     <orderEntry type="library" name="Maven: org.inventivetalent.spiget-update:bukkit:1.4.1" level="project" />

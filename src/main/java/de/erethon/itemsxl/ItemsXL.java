@@ -114,7 +114,7 @@ public class ItemsXL extends DREPlugin {
         api.loadDataFiles();
         api.finishInitialization();
         api.loadRecipes(this);
-        api.addLoadedRecipes();
+        api.registerLoadedRecipes();
     }
 
     public void saveRecipe(YamlConfiguration config, String key, CustomRecipe recipe) {

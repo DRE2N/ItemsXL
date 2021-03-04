@@ -52,6 +52,7 @@ public class ListCommand extends DRECommand {
     public ListCommand(ItemsXL plugin) {
         api = plugin.getAPI();
         setCommand("list");
+        setAliases("l");
         setMinArgs(0);
         setMaxArgs(2);
         setHelp(IMessage.HELP_LIST.getMessage());
@@ -68,17 +69,17 @@ public class ListCommand extends DRECommand {
             i++;
             if (args[1].equalsIgnoreCase("ci")) {
                 objects = api.getCustomItems();
-            } else if (args[1].equalsIgnoreCase("vi") || args[1].equalsIgnoreCase("vanillaItems")) {
+            } else if (args[1].equalsIgnoreCase("vi") | args[1].equalsIgnoreCase("vanillaItems")) {
                 objects = VanillaItem.getLoaded();
-            } else if (args[1].equalsIgnoreCase("cm") || args[1].equalsIgnoreCase("customMobs")) {
+            } else if (args[1].equalsIgnoreCase("cm") | args[1].equalsIgnoreCase("customMobs")) {
                 objects = api.getCustomMobs();
-            } else if (args[1].equalsIgnoreCase("vm") || args[1].equalsIgnoreCase("vanillaMobs")) {
+            } else if (args[1].equalsIgnoreCase("vm") | args[1].equalsIgnoreCase("vanillaMobs")) {
                 objects = VanillaMob.getLoaded();
-            } else if (args[1].equalsIgnoreCase("m") || args[1].equalsIgnoreCase("mobs")) {
+            } else if (args[1].equalsIgnoreCase("m") | args[1].equalsIgnoreCase("mobs")) {
                 objects = api.getExMobs();
-            } else if (args[1].equalsIgnoreCase("lt") || args[1].equalsIgnoreCase("lootTables")) {
+            } else if (args[1].equalsIgnoreCase("lt") | args[1].equalsIgnoreCase("lootTables")) {
                 objects = api.getLootTables();
-            } else if (args[1].equalsIgnoreCase("r") || args[1].equalsIgnoreCase("recipes")) {
+            } else if (args[1].equalsIgnoreCase("r") | args[1].equalsIgnoreCase("recipes")) {
                 objects = api.getRecipes();
             } else {
                 objects = api.getExItems();
@@ -114,7 +115,7 @@ public class ListCommand extends DRECommand {
     private TextComponent getMessage(Object o) {
         if (!(o instanceof CustomRecipe)) {
             return new TextComponent(ChatColor.translateAlternateColorCodes('&',
-                    "&b" + getId(o) + "&7 | &e" + o.getClass().getSimpleName() + ((o instanceof ExItem) ? "&7 | &e" + ((ExItem) o).getMaterial() : "")));
+                    ("&b" + getId(o) + "&7 | &e" + o.getClass().getSimpleName() + ((o instanceof ExItem) ? "&7 | &e" + ((ExItem) o).getMaterial() : ""))));
         }
         return createRecipeTextComponent((CustomRecipe) o);
     }
@@ -139,22 +140,22 @@ public class ListCommand extends DRECommand {
             stringKey = shaped.getKey().getKey();
             // info
             component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(
-                    "Result: " + stringKey + "\n" +
-                            "Amount: " + shaped.getAmount() + "\n" +
-                            "Shape: " + RecipeUtil.toShapeString(shaped.getShape()) + "\n" +
-                            "Ingredients: " + shaped.toIngredientString()
+                    IMessage.RECIPE_RESULT.getMessage(stringKey) + "\n" +
+                            IMessage.RECIPE_AMOUNT.getMessage(String.valueOf(shaped.getAmount())) + "\n" +
+                            IMessage.RECIPE_SHAPE.getMessage(RecipeUtil.toShapeString(shaped.getShape())) + "\n" +
+                            IMessage.RECIPE_INGREDIENTS.getMessage(shaped.toIngredientString())
             )));
         } else {
             CustomShapelessRecipe shapeless = (CustomShapelessRecipe) recipe;
             stringKey = shapeless.getKey().getKey();
             // info
             component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(
-                    "Result: " + shapeless.getRecipeResult().getStringKey() + "\n" +
-                            "Amount: " + shapeless.getAmount() + "\n" +
-                            "Ingredients: " + shapeless.toIngredientString()
+                    IMessage.RECIPE_RESULT.getMessage(shapeless.getRecipeResult().getStringKey()) + "\n" +
+                            IMessage.RECIPE_AMOUNT.getMessage(String.valueOf(shapeless.getAmount())) + "\n" +
+                            IMessage.RECIPE_INGREDIENTS.getMessage(shapeless.toIngredientString())
             )));
         }
-        component.setText(stringKey);
+        component.setText(ChatColor.AQUA + stringKey);
         component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ixl recipeEditor " + stringKey));
         return component;
     }

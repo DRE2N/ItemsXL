@@ -57,3 +57,9 @@ editor:
   shapelessRecipe: "&7Shaped&8: &cfalse"
   addRecipe: "&aAdd Recipe ✓"
   missingResult: "&aMissing result"
+recipe:
+  result: "&6Result: &7&v1"
+  amount: "&6Amount: &7&v1"
+  shape: "&6Shape: &7&v1"
+  ingredients: "&6Ingredients: &7&v1"
+  editor: "&8[&6Recipe Editor&8] &7&v1"
