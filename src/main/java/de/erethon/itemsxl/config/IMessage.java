@@ -54,6 +54,7 @@ public enum IMessage implements Message {
     HELP_LOOT_TABLE("help.lootTable"),
     HELP_MAIN("help.main"),
     HELP_OPEN("help.open"),
+    HELP_RECIPE_EDITOR("help.recipeEditor"),
     HELP_REGISTER_ITEM("help.registerItem"),
     HELP_REGISTER_MOB("help.registerMob"),
     HELP_RELOAD("help.reload"),
@@ -63,7 +64,11 @@ public enum IMessage implements Message {
     OBJECT_ITEM("object.item"),
     OBJECT_LOOT_TABLE("object.lootTable"),
     OBJECT_MOB("object.mob"),
-    OBJECT_WORLD("object.world");
+    OBJECT_WORLD("object.world"),
+    EDITOR_SHAPED_RECIPE("editor.shapedRecipe"),
+    EDITOR_SHAPELESS_RECIPE("editor.shapelessRecipe"),
+    EDITOR_ADD_RECIPE("editor.addRecipe"),
+    EDITOR_MISSING_RESULT("editor.missingResult");
 
     private String path;
 

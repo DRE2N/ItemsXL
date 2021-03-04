@@ -32,8 +32,8 @@ import org.bukkit.command.CommandSender;
  */
 public class ReloadCommand extends DRECommand {
 
-    private ItemsXL plugin;
-    private CaliburnAPI api;
+    private final ItemsXL plugin;
+    private final CaliburnAPI api;
 
     public ReloadCommand(ItemsXL plugin) {
         this.plugin = plugin;
@@ -55,7 +55,7 @@ public class ReloadCommand extends DRECommand {
         plugin.reloadMessageHandler();
         plugin.loadIConfig();
         plugin.loadICommandCache();
-        plugin.getAPI().reload();
+        plugin.getAPI().reload(plugin);
 
         MessageUtil.sendPluginTag(sender, plugin);
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_RELOAD_SUCCESS.getMessage());

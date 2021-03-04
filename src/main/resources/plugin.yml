@@ -1,7 +1,7 @@
 name: ItemsXL
 main: de.erethon.itemsxl.ItemsXL
 version: ${project.version}${buildNo}
-author: Daniel Saukel
+authors: [Daniel Saukel, Fyreum]
 description: "Implementation of Caliburn v${apiVersion}."
 website: ${project.url}
 commands:

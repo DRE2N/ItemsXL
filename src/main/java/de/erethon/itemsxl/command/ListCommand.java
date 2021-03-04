@@ -22,6 +22,10 @@ import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
 import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.VanillaMob;
+import de.erethon.caliburn.recipe.CustomRecipe;
+import de.erethon.caliburn.recipe.CustomShapedRecipe;
+import de.erethon.caliburn.recipe.CustomShapelessRecipe;
+import de.erethon.caliburn.util.RecipeUtil;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.command.DRECommand;
 import de.erethon.commons.misc.NumberUtil;
@@ -30,14 +34,20 @@ import de.erethon.itemsxl.config.IMessage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
- * @author Daniel Saukel
+ * @author Daniel Saukel, Fyreum
  */
 public class ListCommand extends DRECommand {
 
-    private CaliburnAPI api;
+    private final CaliburnAPI api;
 
     public ListCommand(ItemsXL plugin) {
         api = plugin.getAPI();
@@ -53,21 +63,23 @@ public class ListCommand extends DRECommand {
     @Override
     public void onExecute(String[] args, CommandSender sender) {
         int i = 1;
-        Collection<?> objects = null;
+        Collection<?> objects;
         if (args.length > 1) {
             i++;
             if (args[1].equalsIgnoreCase("ci")) {
                 objects = api.getCustomItems();
-            } else if (args[1].equalsIgnoreCase("vi")) {
+            } else if (args[1].equalsIgnoreCase("vi") || args[1].equalsIgnoreCase("vanillaItems")) {
                 objects = VanillaItem.getLoaded();
-            } else if (args[1].equalsIgnoreCase("cm")) {
+            } else if (args[1].equalsIgnoreCase("cm") || args[1].equalsIgnoreCase("customMobs")) {
                 objects = api.getCustomMobs();
-            } else if (args[1].equalsIgnoreCase("vm")) {
+            } else if (args[1].equalsIgnoreCase("vm") || args[1].equalsIgnoreCase("vanillaMobs")) {
                 objects = VanillaMob.getLoaded();
-            } else if (args[1].equalsIgnoreCase("m")) {
+            } else if (args[1].equalsIgnoreCase("m") || args[1].equalsIgnoreCase("mobs")) {
                 objects = api.getExMobs();
-            } else if (args[1].equalsIgnoreCase("lt")) {
+            } else if (args[1].equalsIgnoreCase("lt") || args[1].equalsIgnoreCase("lootTables")) {
                 objects = api.getLootTables();
+            } else if (args[1].equalsIgnoreCase("r") || args[1].equalsIgnoreCase("recipes")) {
+                objects = api.getRecipes();
             } else {
                 objects = api.getExItems();
             }
@@ -96,8 +108,15 @@ public class ListCommand extends DRECommand {
 
         MessageUtil.sendPluginTag(sender, ItemsXL.getInstance());
         MessageUtil.sendCenteredMessage(sender, "&4&l[ &6" + min + "-" + max + " &4/&6 " + send + " &4|&6 " + page + " &4&l]");
-        toSend.forEach(o -> MessageUtil.sendMessage(sender, "&b" + getId(o) + "&7 | &e" + o.getClass().getSimpleName()
-                + ((o instanceof ExItem) ? "&7 | &e" + ((ExItem) o).getMaterial() : "")));
+        toSend.forEach(o -> MessageUtil.sendMessage(sender, getMessage(o)));
+    }
+
+    private TextComponent getMessage(Object o) {
+        if (!(o instanceof CustomRecipe)) {
+            return new TextComponent(ChatColor.translateAlternateColorCodes('&',
+                    "&b" + getId(o) + "&7 | &e" + o.getClass().getSimpleName() + ((o instanceof ExItem) ? "&7 | &e" + ((ExItem) o).getMaterial() : "")));
+        }
+        return createRecipeTextComponent((CustomRecipe) o);
     }
 
     private String getId(Object object) {
@@ -105,9 +124,39 @@ public class ListCommand extends DRECommand {
             return ((Categorizable) object).getId();
         } else if (object instanceof LootTable) {
             return ((LootTable) object).getName();
+        } else if (object instanceof CustomRecipe) {
+            return ((CustomRecipe) object).getId();
         } else {
             return "";
         }
+    }
+
+    public TextComponent createRecipeTextComponent(CustomRecipe recipe) {
+        TextComponent component = new TextComponent();
+        String stringKey;
+        if (recipe instanceof CustomShapedRecipe) {
+            CustomShapedRecipe shaped = (CustomShapedRecipe) recipe;
+            stringKey = shaped.getKey().getKey();
+            // info
+            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(
+                    "Result: " + stringKey + "\n" +
+                            "Amount: " + shaped.getAmount() + "\n" +
+                            "Shape: " + RecipeUtil.toShapeString(shaped.getShape()) + "\n" +
+                            "Ingredients: " + shaped.toIngredientString()
+            )));
+        } else {
+            CustomShapelessRecipe shapeless = (CustomShapelessRecipe) recipe;
+            stringKey = shapeless.getKey().getKey();
+            // info
+            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(
+                    "Result: " + shapeless.getRecipeResult().getStringKey() + "\n" +
+                            "Amount: " + shapeless.getAmount() + "\n" +
+                            "Ingredients: " + shapeless.toIngredientString()
+            )));
+        }
+        component.setText(stringKey);
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ixl recipeEditor " + stringKey));
+        return component;
     }
 
 }

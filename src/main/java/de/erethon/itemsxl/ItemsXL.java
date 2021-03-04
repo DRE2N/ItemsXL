@@ -17,22 +17,32 @@
 package de.erethon.itemsxl;
 
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.recipe.CustomRecipe;
 import de.erethon.commons.command.DRECommandCache;
 import de.erethon.commons.compatibility.Internals;
+import de.erethon.commons.config.RawConfiguration;
 import de.erethon.commons.javaplugin.DREPlugin;
 import de.erethon.commons.javaplugin.DREPluginSettings;
 import de.erethon.itemsxl.command.*;
 import de.erethon.itemsxl.config.IConfig;
 import de.erethon.itemsxl.item.ItemBoxListener;
+import de.erethon.itemsxl.recipe.RecipeEditor;
 import de.erethon.vignette.api.VignetteAPI;
 import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Daniel Saukel
  */
 public class ItemsXL extends DREPlugin {
 
+    private static ItemsXL instance;
     private CaliburnAPI api;
 
     private IConfig iConfig;
@@ -51,12 +61,15 @@ public class ItemsXL extends DREPlugin {
     public void onEnable() {
         super.onEnable();
 
+        instance = this;
+
         VignetteAPI.init(this);
         loadIConfig();
         loadAPI();
         loadICommandCache();
 
         manager.registerEvents(new ItemBoxListener(this), this);
+        manager.registerEvents(new RecipeEditor(), this);
     }
 
     /**
@@ -82,22 +95,7 @@ public class ItemsXL extends DREPlugin {
      * load / reload a new instance of DRECommandCache
      */
     public void loadICommandCache() {
-        iCommands = new DRECommandCache(
-                "itemsxl",
-                this,
-                new HelpCommand(this),
-                new GiveCommand(this),
-                new ListCommand(this),
-                new LootTableCommand(this),
-                new MainCommand(this),
-                new OpenCommand(this),
-                new RegisterItemCommand(this),
-                new RegisterMobCommand(this),
-                new ReloadCommand(this),
-                new SerializeCommand(this),
-                new SummonCommand(this)
-        );
-
+        iCommands = new ICommandCache(this);
         iCommands.register(this);
     }
 
@@ -115,6 +113,55 @@ public class ItemsXL extends DREPlugin {
         api = new CaliburnAPI(this, ChatColor.translateAlternateColorCodes('&', iConfig.getIdentifierPrefix()));
         api.loadDataFiles();
         api.finishInitialization();
+        api.loadRecipes(this);
+        api.addLoadedRecipes();
     }
 
+    public void saveRecipe(YamlConfiguration config, String key, CustomRecipe recipe) {
+        config.set(getNonExistingId(config, key), api.serializeRecipe(recipe));
+    }
+
+    public void saveRecipe(File file, String key, CustomRecipe recipe) {
+        RawConfiguration config = RawConfiguration.loadConfiguration(file);
+        saveRecipe(config, key, recipe);
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getNonExistingId(YamlConfiguration config, String key) {
+        String nonExistingKey = key;
+        int i = 1;
+        while (config.contains(nonExistingKey)) {
+            nonExistingKey = key + "_" + i++;
+        }
+        return nonExistingKey;
+    }
+
+    public void saveItemStack(YamlConfiguration config, ItemStack itemStack) {
+        config.set("==", "org.bukkit.inventory.ItemStack");
+        for (Map.Entry<String, Object> entry : itemStack.serialize().entrySet()) {
+            config.set(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public void saveItemStack(File file, ItemStack itemStack) {
+        RawConfiguration config = RawConfiguration.loadConfiguration(file);
+        saveItemStack(config, itemStack);
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static NamespacedKey key(String key) {
+        return new NamespacedKey(instance, key);
+    }
+
+    public static ItemsXL inst() {
+        return instance;
+    }
 }

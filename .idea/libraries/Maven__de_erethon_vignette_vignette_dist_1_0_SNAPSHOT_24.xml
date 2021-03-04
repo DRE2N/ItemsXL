@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: de.erethon.vignette:vignette-dist:1.0-SNAPSHOT-24">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/de/erethon/vignette/vignette-dist/1.0-SNAPSHOT-24/vignette-dist-1.0-SNAPSHOT-24.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/de/erethon/vignette/vignette-dist/1.0-SNAPSHOT-24/vignette-dist-1.0-SNAPSHOT-24-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/de/erethon/vignette/vignette-dist/1.0-SNAPSHOT-24/vignette-dist-1.0-SNAPSHOT-24-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
