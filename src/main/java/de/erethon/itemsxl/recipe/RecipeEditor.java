@@ -1,6 +1,8 @@
 package de.erethon.itemsxl.recipe;
 
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.category.IdentifierType;
+import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.recipe.CustomRecipe;
 import de.erethon.caliburn.recipe.CustomShapedRecipe;
@@ -68,19 +70,18 @@ public class RecipeEditor implements Listener {
         Arrays.sort(NON_GLASS_INDEXES);
         // buttons
         specifyMeta(GLASS, GLASS_KEY, "&0", true);
-        specifyMeta(SHAPED_TYPE_BUTTON, TYPE_KEY, IMessage.EDITOR_SHAPED_RECIPE.getMessage());
-        specifyMeta(SHAPELESS_TYPE_BUTTON, TYPE_KEY, IMessage.EDITOR_SHAPELESS_RECIPE.getMessage());
-        specifyMeta(FINISH_BUTTON, FINISH_KEY, IMessage.EDITOR_ADD_RECIPE.getMessage());
-        specifyMeta(NO_RESULT_ITEM, NO_RESULT_KEY, IMessage.EDITOR_MISSING_RESULT.getMessage());
+        specifyMeta(SHAPED_TYPE_BUTTON, TYPE_KEY, IMessage.EDITOR_SHAPED_RECIPE.getMessage(), false);
+        specifyMeta(SHAPELESS_TYPE_BUTTON, TYPE_KEY, IMessage.EDITOR_SHAPELESS_RECIPE.getMessage(), false);
+        specifyMeta(FINISH_BUTTON, FINISH_KEY, IMessage.EDITOR_ADD_RECIPE.getMessage(), false);
+        specifyMeta(NO_RESULT_ITEM, NO_RESULT_KEY, IMessage.EDITOR_ERRONEOUS_ITEM_NAME.getMessage(), false, IMessage.EDITOR_ERRONEOUS_ITEM_LORE.getMessage().split("<br>"));
     }
 
-    private static void specifyMeta(ItemStack item, NamespacedKey key, String name) {
-        specifyMeta(item, key, name, false);
-    }
-
-    private static void specifyMeta(ItemStack item, NamespacedKey key, String name, boolean hideAttr) {
+    private static void specifyMeta(ItemStack item, NamespacedKey key, String name, boolean hideAttr, String... lore) {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        if (lore.length != 0) {
+            meta.setLore(Arrays.asList(lore));
+        }
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         if (hideAttr) {
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -196,7 +197,7 @@ public class RecipeEditor implements Listener {
                 saveRecipe(clicked, currentEditors.get(who.getUniqueId()));
             } catch (ValidationException e) {
                 event.setCurrentItem(NO_RESULT_ITEM);
-                Bukkit.getScheduler().runTaskLater(ItemsXL.inst(), () -> event.setCurrentItem(FINISH_BUTTON), 30);
+                Bukkit.getScheduler().runTaskLater(ItemsXL.inst(), () -> event.setCurrentItem(FINISH_BUTTON), 80);
                 return;
             }
             MessageUtil.sendMessage(who, "&aRecipe saved!");
@@ -219,7 +220,6 @@ public class RecipeEditor implements Listener {
             Map<Character, RecipeIngredient> ingredients = new HashMap<>();
 
             int c = 1;
-            int ingredientIndex = 0; // the amount of saved ingredients so far
             for (int index : RECIPE_FIELD_INDEXES) {
                 ItemStack item = inv.getItem(index);
                 if (item == null || item.getType().equals(Material.AIR)) {
@@ -227,7 +227,7 @@ public class RecipeEditor implements Listener {
                     c++;
                     continue;
                 }
-                RecipeIngredient ingredient = getIngredient(id, ingredientIndex, item);
+                RecipeIngredient ingredient = Validate.notNull(getIngredient(item), "Ingredient at '" + index + "' is null. That means the ExItem couldn't be found");
 
                 boolean set = true;
                 if (!cache.isEmpty()) {
@@ -259,7 +259,7 @@ public class RecipeEditor implements Listener {
                 ingredients.put(c1, ingredient);
             }
 
-            RecipeResult recipeResult = getResult(id, result);
+            RecipeResult recipeResult = Validate.notNull(getResult(result), "Recipe result is null. That means the ExItem couldn't be found");
             CustomShapedRecipe recipe = new CustomShapedRecipe(ItemsXL.key(id), recipeResult, RecipeUtil.toShape(shape), ingredients);
 
             if (session.isExisting()) {
@@ -274,7 +274,6 @@ public class RecipeEditor implements Listener {
         } else {
             Map<RecipeIngredient, Integer> ingredients = new HashMap<>();
 
-            int ingredientIndex = 0; // the amount of saved ingredients so far
             for (Integer index : RECIPE_FIELD_INDEXES) {
                 ItemStack item = inv.getItem(index);
                 if (item == null) {
@@ -289,12 +288,11 @@ public class RecipeEditor implements Listener {
                     }
                 }
                 if (set) {
-                    ingredients.put(getIngredient(id, ingredientIndex, item), 1);
-                    ingredientIndex++;
+                    ingredients.put(Validate.notNull(getIngredient(item), "Ingredient at '" + index + "' is null. That means the ExItem couldn't be found"), 1);
                 }
             }
 
-            RecipeResult recipeResult = getResult(id, result);
+            RecipeResult recipeResult = Validate.notNull(getResult(result), "Recipe result is null. That means the ExItem couldn't be found");
             CustomShapelessRecipe recipe = new CustomShapelessRecipe(ItemsXL.key(id), recipeResult, ingredients);
 
             if (session.isExisting()) {
@@ -305,11 +303,15 @@ public class RecipeEditor implements Listener {
         }
     }
 
-    private RecipeIngredient getIngredient(String id, int ingredientIndex, ItemStack item) {
-        return item.hasItemMeta() ? new ItemIngredient(getExItem(id + "_INGREDIENT_" + ingredientIndex, item)) : new MaterialIngredient(item.getType());
+    private RecipeIngredient getIngredient(ItemStack item) {
+        ExItem exItem = getExItem(item);
+        if (exItem == null) {
+            return null;
+        }
+        return item.hasItemMeta() ? new ItemIngredient(exItem) : new MaterialIngredient(item.getType());
     }
 
-    private RecipeResult getResult(String id, ItemStack result) {
+    private RecipeResult getResult(ItemStack result) {
         CaliburnAPI api = ItemsXL.inst().getAPI();
         RecipeResult recipeResult = null;
         for (ExItem exItem : api.getExItems()) {
@@ -318,22 +320,37 @@ public class RecipeEditor implements Listener {
             }
         }
         if (recipeResult == null) {
-            ExItem exItem = getExItem(id + "_RESULT", result);
+            ExItem exItem = getExItem(result);
+            if (exItem == null) {
+                return null;
+            }
             recipeResult = result.hasItemMeta() ? new RecipeResult(exItem, result.getAmount()) : new RecipeResult(result.getType(), result.getAmount());
         }
         return recipeResult;
     }
 
-    private ExItem getExItem(String id, ItemStack item) {
+    private ExItem getExItem(ItemStack item) {
         CaliburnAPI api = ItemsXL.inst().getAPI();
         for (ExItem exItem : api.getExItems()) {
             if (exItem.toItemStack().isSimilar(item)) {
                 return exItem;
             }
         }
-        File file = new File(api.getCustomItemsFile(), id);
-        ItemsXL.inst().saveItemStack(file, item);
+
+        if (item.getItemMeta() == null) {
+            return null;
+        }
+        ItemMeta meta = item.getItemMeta();
+        if (meta.getLore() == null) {
+            return null;
+        }
+
+        String exItemId = api.getExItemId(item, IdentifierType.LORE);
+        CustomItem customItem = new CustomItem(api, IdentifierType.LORE, exItemId, item);
+
+        File file = new File(api.getCustomItemsFile(), exItemId + ".yml");
+        ItemsXL.inst().saveItemStack(file, customItem);
         api.reload();
-        return api.getExItem(item);
+        return customItem;
     }
 }

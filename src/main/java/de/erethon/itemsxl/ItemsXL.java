@@ -17,12 +17,14 @@
 package de.erethon.itemsxl;
 
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.recipe.CustomRecipe;
 import de.erethon.commons.command.DRECommandCache;
 import de.erethon.commons.compatibility.Internals;
 import de.erethon.commons.config.RawConfiguration;
 import de.erethon.commons.javaplugin.DREPlugin;
 import de.erethon.commons.javaplugin.DREPluginSettings;
+import de.erethon.commons.misc.FileUtil;
 import de.erethon.itemsxl.command.*;
 import de.erethon.itemsxl.config.IConfig;
 import de.erethon.itemsxl.item.ItemBoxListener;
@@ -117,11 +119,25 @@ public class ItemsXL extends DREPlugin {
         api.registerLoadedRecipes();
     }
 
+    /**
+     * Stores the recipe at the given {@link YamlConfiguration}.
+     *
+     * @param config the target config
+     * @param recipe the recipe to save
+     */
     public void saveRecipe(YamlConfiguration config, String key, CustomRecipe recipe) {
         config.set(getNonExistingId(config, key), api.serializeRecipe(recipe));
     }
 
+    /**
+     * Stores the recipe at the loaded {@link RawConfiguration} of the file.
+     * After storing the recipe the config will be saved again.
+     *
+     * @param file the target file
+     * @param recipe the recipe to save
+     */
     public void saveRecipe(File file, String key, CustomRecipe recipe) {
+        FileUtil.createIfNotExisting(file);
         RawConfiguration config = RawConfiguration.loadConfiguration(file);
         saveRecipe(config, key, recipe);
         try {
@@ -140,16 +156,29 @@ public class ItemsXL extends DREPlugin {
         return nonExistingKey;
     }
 
-    public void saveItemStack(YamlConfiguration config, ItemStack itemStack) {
-        config.set("==", "org.bukkit.inventory.ItemStack");
-        for (Map.Entry<String, Object> entry : itemStack.serialize().entrySet()) {
+    /**
+     * Stores the ItemStack at the given {@link YamlConfiguration}.
+     *
+     * @param config the target config
+     * @param customItem the ItemStack to save
+     */
+    public void saveItemStack(YamlConfiguration config, CustomItem customItem) {
+        for (Map.Entry<String, Object> entry : customItem.serialize().entrySet()) {
             config.set(entry.getKey(), entry.getValue());
         }
     }
 
-    public void saveItemStack(File file, ItemStack itemStack) {
+    /**
+     * Stores the ItemStack at the loaded {@link RawConfiguration} of the file.
+     * After storing the ItemStack the config will be saved again.
+     *
+     * @param file the target file
+     * @param customItem the ItemStack to save
+     */
+    public void saveItemStack(File file, CustomItem customItem) {
+        FileUtil.createIfNotExisting(file);
         RawConfiguration config = RawConfiguration.loadConfiguration(file);
-        saveItemStack(config, itemStack);
+        saveItemStack(config, customItem);
         try {
             config.save(file);
         } catch (IOException e) {
@@ -157,6 +186,12 @@ public class ItemsXL extends DREPlugin {
         }
     }
 
+    /**
+     * Returns an {@link NamespacedKey} created by this plugin and the given key.
+     *
+     * @param key the key
+     * @return a NamespacedKey created by this plugin
+     */
     public static NamespacedKey key(String key) {
         return new NamespacedKey(instance, key);
     }

@@ -96,7 +96,7 @@ public class ICommandCache extends DRECommandCache implements TabCompleter {
                     }
                 }
                 if (cmd.equalsIgnoreCase("list")) {
-                    for (String arg : Arrays.asList("vanillaItems", "customMobs", "vanillaMobs", "mobs", "lootTables", "recipes")) {
+                    for (String arg : Arrays.asList("customItems", "vanillaItems", "customMobs", "vanillaMobs", "mobs", "lootTables", "recipes")) {
                         if (arg.toLowerCase().startsWith(args[1].toLowerCase())) {
                             completes.add(arg);
                         }

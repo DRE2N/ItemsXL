@@ -60,7 +60,8 @@ editor:
   shapedRecipe: "&7Shaped&8: &atrue"
   shapelessRecipe: "&7Shaped&8: &cfalse"
   addRecipe: "&aAdd Recipe ✓"
-  missingResult: "&aMissing result"
+  erroneousItemName: "&cErroneous item"
+  erroneousItemLore: "&7An item is null or couldn't be identified. <br>&eMake sure to have all custom items stored under caliburn."
 recipe:
   result: "&6Result: &7&v1"
   amount: "&6Amount: &7&v1"

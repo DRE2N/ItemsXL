@@ -67,7 +67,7 @@ public class ListCommand extends DRECommand {
         Collection<?> objects;
         if (args.length > 1) {
             i++;
-            if (args[1].equalsIgnoreCase("ci")) {
+            if (args[1].equalsIgnoreCase("ci") | args[1].equalsIgnoreCase("customItems")) {
                 objects = api.getCustomItems();
             } else if (args[1].equalsIgnoreCase("vi") | args[1].equalsIgnoreCase("vanillaItems")) {
                 objects = VanillaItem.getLoaded();
