@@ -223,7 +223,7 @@ public class RecipeEditor implements Listener {
             for (int index : RECIPE_FIELD_INDEXES) {
                 ItemStack item = inv.getItem(index);
                 if (item == null || item.getType().equals(Material.AIR)) {
-                    shape = shape.replace(Util.getChar(c), ' ');
+                    shape = shape.replace(Character.forDigit(c, 10), ' ');
                     c++;
                     continue;
                 }
@@ -233,14 +233,14 @@ public class RecipeEditor implements Listener {
                 if (!cache.isEmpty()) {
                     for (RecipeIngredient key : cache.keySet()) {
                         if (key.getRecipeChoice().equals(ingredient.getRecipeChoice())) {
-                            cache.get(key).add(Util.getChar(c));
+                            cache.get(key).add(Character.forDigit(c, 10));
                             set = false;
                         }
                     }
                 }
                 if (set) {
                     List<Character> chars = new ArrayList<>();
-                    chars.add(Util.getChar(c));
+                    chars.add(Character.forDigit(c, 10));
                     cache.put(ingredient, chars);
                 }
                 c++;
@@ -252,7 +252,7 @@ public class RecipeEditor implements Listener {
 
                 List<Character> chars = cache.get(ingredient);
 
-                char c1 = Util.getChar(i);
+                char c1 = Character.forDigit(i, 10);
                 for (Character ch : chars) {
                     shape = shape.replace(ch, c1);
                 }
