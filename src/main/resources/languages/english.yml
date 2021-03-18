@@ -43,7 +43,7 @@ help:
   lootTable: "&7Creates a new or edits an existing loot table. Usage: &o/ixl lootTable [name] ([-delete,d])"
   main: "&7General status information."
   open: "&7Open the item box in your hand."
-  recipeEditor: "&7Opens an recipe editor. Usage: &o/ixl recipeEditor [recipe]"
+  recipeEditor: "&7Opens a recipe editor. Usage: &o/ixl recipeEditor [recipe]"
   registerItem: "&7Registers an item as a Caliburn item. Usage: &o/ixl ri [ID] [ID Type]"
   registerMob: "&7Registers a mob as a Caliburn mob. Usage: &o/ixl rm [ID] [ID Type]"
   reload: "&7Reload all configs and data. Usage: &o/ixl reload"
